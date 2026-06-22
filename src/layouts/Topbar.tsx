@@ -16,7 +16,7 @@ export function Topbar({ onOpenSidebar }: TopbarProps) {
           type="button"
           aria-label="Open sidebar"
           onClick={onOpenSidebar}
-          className="grid size-11 shrink-0 place-items-center rounded-2xl border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:border-red-200 hover:text-red-600 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-red-900/70 dark:hover:text-red-500 lg:hidden"
+          className="grid size-11 shrink-0 place-items-center rounded-2xl border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:border-blue-200 hover:text-blue-600 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-blue-900/70 dark:hover:text-blue-500 lg:hidden"
         >
           <Menu className="size-5" />
         </button>
@@ -26,7 +26,7 @@ export function Topbar({ onOpenSidebar }: TopbarProps) {
           <input
             aria-label="Search"
             placeholder="Search workspaces, projects, tasks..."
-            className="h-11 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-4 text-sm text-gray-900 shadow-sm outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+            className="h-11 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-4 text-sm text-gray-900 shadow-sm outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/10"
           />
         </div>
 
@@ -35,10 +35,10 @@ export function Topbar({ onOpenSidebar }: TopbarProps) {
         <button
           type="button"
           aria-label="Notifications"
-          className="relative hidden size-11 shrink-0 place-items-center rounded-2xl border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:border-red-200 hover:text-red-600 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-red-900/70 dark:hover:text-red-500 sm:grid"
+          className="relative hidden size-11 shrink-0 place-items-center rounded-2xl border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:border-blue-200 hover:text-blue-600 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-blue-900/70 dark:hover:text-blue-500 sm:grid"
         >
           <Bell className="size-5" />
-          <span className="absolute right-3 top-3 size-2 rounded-full bg-red-600 ring-2 ring-white dark:bg-red-500 dark:ring-zinc-900" />
+          <span className="absolute right-3 top-3 size-2 rounded-full bg-blue-600 ring-2 ring-white dark:bg-blue-500 dark:ring-zinc-900" />
         </button>
 
         <UserMenu />

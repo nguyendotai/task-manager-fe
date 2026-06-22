@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { AlertCircle, X } from "lucide-react";
 import {
   clearProjectErrors,
-  createProject
+  createProject,
 } from "@/modules/projects/store/project-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -22,7 +22,7 @@ type FormErrors = {
 export function CreateProjectModal({
   open,
   workspaceId,
-  onClose
+  onClose,
 }: CreateProjectModalProps) {
   const dispatch = useAppDispatch();
   const { creating, createError } = useAppSelector((state) => state.projects);
@@ -71,8 +71,8 @@ export function CreateProjectModal({
       createProject({
         name: name.trim(),
         description: description.trim(),
-        workspaceId
-      })
+        workspaceId,
+      }),
     );
 
     if (createProject.fulfilled.match(result)) {
@@ -85,14 +85,15 @@ export function CreateProjectModal({
       <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-5 shadow-soft dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               New project
             </p>
             <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
               Create Project
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-zinc-400">
-              Add a project to this workspace. Permissions are enforced by the backend.
+              Add a project to this workspace. Permissions are enforced by the
+              backend.
             </p>
           </div>
 
@@ -107,7 +108,7 @@ export function CreateProjectModal({
         </div>
 
         {createError ? (
-          <div className="mt-5 flex gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+          <div className="mt-5 flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
             <AlertCircle className="mt-0.5 size-4 shrink-0" />
             <span>{createError}</span>
           </div>
@@ -121,11 +122,11 @@ export function CreateProjectModal({
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-blue-500 dark:focus:ring-blue-500/10"
               placeholder="Mobile app launch"
             />
             {errors.name ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.name}
               </span>
             ) : null}
@@ -139,11 +140,11 @@ export function CreateProjectModal({
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               rows={4}
-              className="mt-2 w-full resize-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm leading-6 text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              className="mt-2 w-full resize-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm leading-6 text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-blue-500 dark:focus:ring-blue-500/10"
               placeholder="What should this project deliver?"
             />
             {errors.description ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.description}
               </span>
             ) : null}
@@ -160,7 +161,7 @@ export function CreateProjectModal({
             <button
               type="submit"
               disabled={creating}
-              className="h-11 rounded-2xl bg-red-600 px-5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-red-500 dark:hover:bg-red-600"
+              className="h-11 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               {creating ? "Creating..." : "Create Project"}
             </button>

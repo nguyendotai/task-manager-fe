@@ -10,14 +10,14 @@ import {
   RefreshCw,
   Tags,
   Trash2,
-  X
+  X,
 } from "lucide-react";
 import {
   Button,
   EmptyState,
   ErrorState,
   Input,
-  Skeleton
+  Skeleton,
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import {
@@ -25,7 +25,7 @@ import {
   createLabel,
   deleteLabel,
   fetchLabelsByWorkspace,
-  updateLabel
+  updateLabel,
 } from "@/modules/labels/store/label-slice";
 import type { Label } from "@/modules/labels/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -44,10 +44,14 @@ const defaultColors = [
   "#0891b2",
   "#2563eb",
   "#7c3aed",
-  "#db2777"
+  "#db2777",
 ];
 
-export function LabelManager({ workspaceId, open, onClose }: LabelManagerProps) {
+export function LabelManager({
+  workspaceId,
+  open,
+  onClose,
+}: LabelManagerProps) {
   const dispatch = useAppDispatch();
   const { items, loading, creating, updating, deleting, error, mutationError } =
     useAppSelector((state) => state.labels);
@@ -100,8 +104,8 @@ export function LabelManager({ workspaceId, open, onClose }: LabelManagerProps) 
       const result = await dispatch(
         updateLabel({
           labelId: editingLabel.id,
-          data: { name: name.trim(), color }
-        })
+          data: { name: name.trim(), color },
+        }),
       );
 
       if (updateLabel.fulfilled.match(result)) {
@@ -116,8 +120,8 @@ export function LabelManager({ workspaceId, open, onClose }: LabelManagerProps) 
         name: name.trim(),
         color,
         workspace: workspaceId,
-        workspaceId
-      })
+        workspaceId,
+      }),
     );
 
     if (createLabel.fulfilled.match(result)) {
@@ -141,7 +145,7 @@ export function LabelManager({ workspaceId, open, onClose }: LabelManagerProps) 
       <aside className="absolute right-4 top-4 flex max-h-[calc(100vh-2rem)] w-[min(94vw,720px)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-950 md:right-6 md:top-6">
         <header className="flex items-start justify-between gap-4 border-b border-gray-100 p-5 dark:border-zinc-800">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               <Layers3 className="size-4" />
               Label Panel
             </p>
@@ -212,7 +216,7 @@ export function LabelManager({ workspaceId, open, onClose }: LabelManagerProps) 
                   className={cn(
                     "size-8 rounded-full ring-2 ring-white transition hover:scale-105 dark:ring-zinc-900",
                     color === item &&
-                      "outline outline-2 outline-offset-2 outline-red-500"
+                      "outline outline-2 outline-offset-2 outline-red-500",
                   )}
                   style={{ backgroundColor: item }}
                 />
@@ -231,7 +235,7 @@ export function LabelManager({ workspaceId, open, onClose }: LabelManagerProps) 
             </div>
 
             {mutationError ? (
-              <div className="mt-3 flex gap-2 rounded-2xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+              <div className="mt-3 flex gap-2 rounded-2xl border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
                 <AlertCircle className="mt-0.5 size-3.5 shrink-0" />
                 <span>{mutationError}</span>
               </div>
@@ -302,7 +306,7 @@ function LabelRow({
   label,
   deleting,
   onEdit,
-  onDelete
+  onDelete,
 }: {
   label: Label;
   deleting: boolean;
@@ -327,7 +331,7 @@ function LabelRow({
           type="button"
           aria-label={`Edit ${label.name}`}
           onClick={onEdit}
-          className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-gray-50 hover:text-red-600 dark:hover:bg-zinc-800 dark:hover:text-red-400"
+          className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-gray-50 hover:text-blue-600 dark:hover:bg-zinc-800 dark:hover:text-blue-400"
         >
           <Pencil className="size-4" />
         </button>
@@ -336,7 +340,7 @@ function LabelRow({
           disabled={deleting}
           aria-label={`Delete ${label.name}`}
           onClick={onDelete}
-          className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-red-50 hover:text-red-600 disabled:opacity-60 dark:hover:bg-red-950/30 dark:hover:text-red-400"
+          className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-blue-50 hover:text-blue-600 disabled:opacity-60 dark:hover:bg-blue-950/30 dark:hover:text-blue-400"
         >
           <Trash2 className="size-4" />
         </button>

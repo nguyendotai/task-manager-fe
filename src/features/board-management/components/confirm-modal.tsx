@@ -22,12 +22,12 @@ export function ConfirmModal({
   confirmLabel,
   loading,
   onConfirm,
-  onClose
+  onClose,
 }: ConfirmModalProps) {
   return (
     <Modal open={open} title={title} eyebrow={eyebrow} onClose={onClose}>
       <div className="mt-6 space-y-5">
-        <div className="flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-800 dark:border-red-900/70 dark:bg-red-950/30 dark:text-red-200">
+        <div className="flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm font-semibold text-blue-800 dark:border-blue-900/70 dark:bg-blue-950/30 dark:text-blue-200">
           <AlertTriangle className="mt-0.5 size-4 shrink-0" />
           <span>{message}</span>
         </div>
@@ -35,7 +35,12 @@ export function ConfirmModal({
           <Button type="button" variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="button" variant="danger" disabled={loading} onClick={onConfirm}>
+          <Button
+            type="button"
+            variant="danger"
+            disabled={loading}
+            onClick={onConfirm}
+          >
             {loading ? "Working..." : confirmLabel}
           </Button>
         </div>

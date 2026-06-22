@@ -5,7 +5,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useState
+  useState,
 } from "react";
 import { AlertCircle, CheckCircle2, Info, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -33,15 +33,16 @@ const variantClassName: Record<ToastVariant, string> = {
   success:
     "border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-900/70 dark:bg-emerald-950/40 dark:text-emerald-100",
   error:
-    "border-red-200 bg-red-50 text-red-900 dark:border-red-900/70 dark:bg-red-950/40 dark:text-red-100",
-  info:
-    "border-gray-200 bg-white text-gray-950 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50"
+    "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-900/70 dark:bg-blue-950/40 dark:text-blue-100",
+  info: "border-gray-200 bg-white text-gray-950 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50",
 };
 
 const iconClassName: Record<ToastVariant, React.ReactNode> = {
-  success: <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-300" />,
-  error: <AlertCircle className="size-5 text-red-600 dark:text-red-300" />,
-  info: <Info className="size-5 text-gray-500 dark:text-zinc-300" />
+  success: (
+    <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-300" />
+  ),
+  error: <AlertCircle className="size-5 text-blue-600 dark:text-blue-300" />,
+  info: <Info className="size-5 text-gray-500 dark:text-zinc-300" />,
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -54,10 +55,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const toast = useCallback(
     ({ variant = "info", ...input }: ToastInput) => {
       const id = crypto.randomUUID();
-      setItems((current) => [{ ...input, variant, id }, ...current].slice(0, 4));
+      setItems((current) =>
+        [{ ...input, variant, id }, ...current].slice(0, 4),
+      );
       window.setTimeout(() => remove(id), 4500);
     },
-    [remove]
+    [remove],
   );
 
   const value = useMemo(() => ({ toast }), [toast]);
@@ -74,10 +77,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             key={item.id}
             className={cn(
               "flex gap-3 rounded-2xl border p-4 shadow-soft",
-              variantClassName[item.variant]
+              variantClassName[item.variant],
             )}
           >
-            <span className="mt-0.5 shrink-0">{iconClassName[item.variant]}</span>
+            <span className="mt-0.5 shrink-0">
+              {iconClassName[item.variant]}
+            </span>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-bold">{item.title}</p>
               {item.description ? (

@@ -8,13 +8,13 @@ import type { WorkspaceMember } from "@/features/workspace-members/types";
 import {
   getMemberEmail,
   getMemberName,
-  getUserId
+  getUserId,
 } from "@/features/workspace-members/utils/member-selectors";
 import { cn } from "@/lib/utils";
 import type {
   TaskPriority,
   TaskStatus,
-  TaskVisibility
+  TaskVisibility,
 } from "@/modules/tasks/types";
 
 export type TaskFiltersState = {
@@ -48,7 +48,7 @@ const emptyFilters: TaskFiltersState = {
   statuses: [],
   labels: [],
   assignees: [],
-  visibilities: []
+  visibilities: [],
 };
 
 const filterMenu: Array<{
@@ -59,35 +59,35 @@ const filterMenu: Array<{
   {
     key: "priorities",
     title: "Priority",
-    description: "Low, medium, high, urgent"
+    description: "Low, medium, high, urgent",
   },
   {
     key: "statuses",
     title: "Status",
-    description: "Workflow status"
+    description: "Workflow status",
   },
   {
     key: "visibilities",
     title: "Visibility",
-    description: "Public or private"
+    description: "Public or private",
   },
   {
     key: "labels",
     title: "Labels",
-    description: "Workspace labels"
+    description: "Workspace labels",
   },
   {
     key: "assignees",
     title: "Assignee",
-    description: "Workspace members"
-  }
+    description: "Workspace members",
+  },
 ];
 
 export function TaskFilters({
   filters,
   labelOptions,
   members,
-  onChange
+  onChange,
 }: TaskFiltersProps) {
   const [activeFilter, setActiveFilter] = useState<FilterKey>("priorities");
   const activeCount =
@@ -101,7 +101,7 @@ export function TaskFilters({
     <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex flex-col gap-4 border-b border-gray-100 p-4 dark:border-zinc-800 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+          <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
             <Filter className="size-4" />
             Filter Panel
           </p>
@@ -134,18 +134,20 @@ export function TaskFilters({
                   className={cn(
                     "flex w-full items-center justify-between gap-3 rounded-2xl px-3 py-3 text-left transition",
                     activeFilter === item.key
-                      ? "bg-red-600 text-white shadow-lg shadow-red-600/20 dark:bg-red-500"
-                      : "text-gray-600 hover:bg-white hover:text-gray-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20 dark:bg-blue-500"
+                      : "text-gray-600 hover:bg-white hover:text-gray-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50",
                   )}
                 >
                   <span className="min-w-0">
-                    <span className="block text-sm font-bold">{item.title}</span>
+                    <span className="block text-sm font-bold">
+                      {item.title}
+                    </span>
                     <span
                       className={cn(
                         "mt-0.5 block truncate text-xs",
                         activeFilter === item.key
-                          ? "text-red-50 dark:text-red-100"
-                          : "text-gray-400 dark:text-zinc-500"
+                          ? "text-blue-50 dark:text-blue-100"
+                          : "text-gray-400 dark:text-zinc-500",
                       )}
                     >
                       {item.description}
@@ -156,8 +158,8 @@ export function TaskFilters({
                       className={cn(
                         "grid size-6 shrink-0 place-items-center rounded-full text-xs font-black",
                         activeFilter === item.key
-                          ? "bg-white text-red-600"
-                          : "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300"
+                          ? "bg-white text-blue-600"
+                          : "bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300",
                       )}
                     >
                       {selectedCount}
@@ -175,7 +177,10 @@ export function TaskFilters({
               members={members}
               selected={filters.assignees}
               onToggle={(value) =>
-                onChange({ ...filters, assignees: toggle(filters.assignees, value) })
+                onChange({
+                  ...filters,
+                  assignees: toggle(filters.assignees, value),
+                })
               }
             />
           ) : (
@@ -186,7 +191,10 @@ export function TaskFilters({
               onToggle={(value) =>
                 onChange({
                   ...filters,
-                  [activeFilter]: toggle(filters[activeFilter] as string[], value)
+                  [activeFilter]: toggle(
+                    filters[activeFilter] as string[],
+                    value,
+                  ),
                 })
               }
             />
@@ -201,7 +209,7 @@ function OptionFilter({
   title,
   options,
   selected,
-  onToggle
+  onToggle,
 }: {
   title: string;
   options: string[];
@@ -234,7 +242,7 @@ function OptionFilter({
 function MemberFilter({
   members,
   selected,
-  onToggle
+  onToggle,
 }: {
   members: WorkspaceMember[];
   selected: string[];
@@ -273,7 +281,7 @@ function MemberFilter({
 
 function FilterHeader({
   title,
-  selectedCount
+  selectedCount,
 }: {
   title: string;
   selectedCount: number;
@@ -288,7 +296,7 @@ function FilterHeader({
           Select one or more options.
         </p>
       </div>
-      <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700 ring-1 ring-red-100 dark:bg-red-950/30 dark:text-red-300 dark:ring-red-900/60">
+      <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 ring-1 ring-blue-100 dark:bg-blue-950/30 dark:text-blue-300 dark:ring-blue-900/60">
         {selectedCount} selected
       </span>
     </div>
@@ -298,7 +306,7 @@ function FilterHeader({
 function FilterButton({
   checked,
   children,
-  onClick
+  onClick,
 }: {
   checked: boolean;
   children: React.ReactNode;
@@ -311,8 +319,8 @@ function FilterButton({
       className={cn(
         "flex min-h-12 items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left text-sm font-bold transition",
         checked
-          ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/70 dark:bg-red-950/30 dark:text-red-300"
-          : "border-gray-200 bg-white text-gray-700 hover:border-red-200 hover:bg-red-50/60 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-red-900/70 dark:hover:bg-red-950/20"
+          ? "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/70 dark:bg-blue-950/30 dark:text-blue-300"
+          : "border-gray-200 bg-white text-gray-700 hover:border-blue-200 hover:bg-blue-50/60 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-blue-900/70 dark:hover:bg-blue-950/20",
       )}
     >
       {children}
@@ -320,8 +328,8 @@ function FilterButton({
         className={cn(
           "grid size-6 shrink-0 place-items-center rounded-full border transition",
           checked
-            ? "border-red-600 bg-red-600 text-white"
-            : "border-gray-300 text-transparent dark:border-zinc-700"
+            ? "border-blue-600 bg-blue-600 text-white"
+            : "border-gray-300 text-transparent dark:border-zinc-700",
         )}
       >
         <Check className="size-3.5" />
@@ -344,7 +352,7 @@ function getFilterTitle(key: FilterKey) {
     statuses: "Status",
     labels: "Labels",
     assignees: "Assignee",
-    visibilities: "Visibility"
+    visibilities: "Visibility",
   };
 
   return titles[key];

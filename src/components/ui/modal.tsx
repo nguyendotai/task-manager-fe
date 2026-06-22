@@ -18,7 +18,7 @@ export function Modal({ open, title, eyebrow, children, onClose }: ModalProps) {
         <div className="flex items-start justify-between gap-4">
           <div>
             {eyebrow ? (
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
                 {eyebrow}
               </p>
             ) : null}
@@ -26,7 +26,12 @@ export function Modal({ open, title, eyebrow, children, onClose }: ModalProps) {
               {title}
             </h2>
           </div>
-          <Button variant="secondary" size="icon" onClick={onClose} aria-label="Close modal">
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
             <X className="size-5" />
           </Button>
         </div>

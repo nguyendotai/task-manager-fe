@@ -17,7 +17,7 @@ type FormErrors = {
 
 export function CreateWorkspaceModal({
   open,
-  onClose
+  onClose,
 }: CreateWorkspaceModalProps) {
   const dispatch = useAppDispatch();
   const creating = useAppSelector((state) => state.workspaces.creating);
@@ -62,8 +62,8 @@ export function CreateWorkspaceModal({
     const result = await dispatch(
       createWorkspace({
         name: name.trim(),
-        description: description.trim()
-      })
+        description: description.trim(),
+      }),
     );
 
     if (createWorkspace.fulfilled.match(result)) {
@@ -76,7 +76,7 @@ export function CreateWorkspaceModal({
       <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-5 shadow-soft dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               New workspace
             </p>
             <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
@@ -105,11 +105,11 @@ export function CreateWorkspaceModal({
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-blue-500 dark:focus:ring-blue-500/10"
               placeholder="Product Team"
             />
             {errors.name ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.name}
               </span>
             ) : null}
@@ -123,11 +123,11 @@ export function CreateWorkspaceModal({
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               rows={4}
-              className="mt-2 w-full resize-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm leading-6 text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              className="mt-2 w-full resize-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm leading-6 text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-blue-500 dark:focus:ring-blue-500/10"
               placeholder="What does this workspace manage?"
             />
             {errors.description ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.description}
               </span>
             ) : null}
@@ -144,7 +144,7 @@ export function CreateWorkspaceModal({
             <button
               type="submit"
               disabled={creating}
-              className="h-11 rounded-2xl bg-red-600 px-5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-red-500 dark:hover:bg-red-600"
+              className="h-11 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               {creating ? "Creating..." : "Create Workspace"}
             </button>

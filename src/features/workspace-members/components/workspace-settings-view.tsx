@@ -11,7 +11,7 @@ import {
   useDeleteWorkspaceMutation,
   useGetWorkspaceQuery,
   useGetWorkspaceMembersQuery,
-  useUpdateWorkspaceSettingsMutation
+  useUpdateWorkspaceSettingsMutation,
 } from "@/features/workspace-members/api/workspace-members-api";
 import { useWorkspaceMemberPermissions } from "@/features/workspace-members/hooks/use-workspace-member-permissions";
 
@@ -25,20 +25,23 @@ type FormErrors = {
   logo?: string;
 };
 
-export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProps) {
+export function WorkspaceSettingsView({
+  workspaceId,
+}: WorkspaceSettingsViewProps) {
   const router = useRouter();
   const { toast } = useToast();
   const {
     data: selectedWorkspace,
     isLoading: loading,
     error,
-    refetch: refetchWorkspace
+    refetch: refetchWorkspace,
   } = useGetWorkspaceQuery(workspaceId);
   const { data: members = [] } = useGetWorkspaceMembersQuery(workspaceId);
   const permissions = useWorkspaceMemberPermissions(members);
   const [updateWorkspace, { isLoading: updating }] =
     useUpdateWorkspaceSettingsMutation();
-  const [deleteWorkspace, { isLoading: deleting }] = useDeleteWorkspaceMutation();
+  const [deleteWorkspace, { isLoading: deleting }] =
+    useDeleteWorkspaceMutation();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [logo, setLogo] = useState("");
@@ -92,20 +95,23 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
         data: {
           name: name.trim(),
           description: description.trim(),
-          logo: logo.trim() || null
-        }
+          logo: logo.trim() || null,
+        },
       }).unwrap();
       toast({
         title: "Workspace updated",
         description: "Workspace settings were saved.",
-        variant: "success"
+        variant: "success",
       });
       refetchWorkspace();
     } catch (submitError) {
       toast({
         title: "Unable to update workspace",
-        description: getWorkspaceMemberApiError(submitError, "You do not have permission to update this workspace."),
-        variant: "error"
+        description: getWorkspaceMemberApiError(
+          submitError,
+          "You do not have permission to update this workspace.",
+        ),
+        variant: "error",
       });
     }
   }
@@ -120,14 +126,17 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
       toast({
         title: "Workspace deleted",
         description: `${selectedWorkspace.name} was deleted.`,
-        variant: "success"
+        variant: "success",
       });
       router.replace("/workspaces");
     } catch (deleteError) {
       toast({
         title: "Unable to delete workspace",
-        description: getWorkspaceMemberApiError(deleteError, "Only workspace owners can delete this workspace."),
-        variant: "error"
+        description: getWorkspaceMemberApiError(
+          deleteError,
+          "Only workspace owners can delete this workspace.",
+        ),
+        variant: "error",
       });
     }
   }
@@ -160,14 +169,14 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
     <div className="space-y-6">
       <Link
         href={`/workspaces/${workspaceId}`}
-        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
+        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-500"
       >
         <ArrowLeft className="size-4" />
         Back to workspace
       </Link>
 
       <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-        <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
           Settings
         </p>
         <h1 className="mt-2 text-3xl font-bold text-gray-950 dark:text-zinc-50">
@@ -182,7 +191,10 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
         onSubmit={handleSubmit}
         className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
       >
-        <fieldset disabled={!permissions.canUpdateWorkspace || updating} className="space-y-4">
+        <fieldset
+          disabled={!permissions.canUpdateWorkspace || updating}
+          className="space-y-4"
+        >
           <label className="block">
             <span className="text-sm font-bold text-gray-700 dark:text-zinc-200">
               Name
@@ -193,7 +205,7 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
               className="mt-2"
             />
             {errors.name ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.name}
               </span>
             ) : null}
@@ -210,7 +222,7 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
               className="mt-2"
             />
             {errors.description ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.description}
               </span>
             ) : null}
@@ -227,7 +239,7 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
               placeholder="https://example.com/logo.png"
             />
             {errors.logo ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.logo}
               </span>
             ) : null}
@@ -251,17 +263,17 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
         </div>
       </form>
 
-      <section className="rounded-2xl border border-red-200 bg-red-50 p-5 shadow-sm dark:border-red-900/70 dark:bg-red-950/25">
+      <section className="rounded-2xl border border-blue-200 bg-blue-50 p-5 shadow-sm dark:border-blue-900/70 dark:bg-blue-950/25">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-red-700 dark:text-red-300">
+            <p className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">
               <AlertTriangle className="size-4" />
               Danger zone
             </p>
-            <h2 className="mt-2 text-xl font-bold text-red-950 dark:text-red-100">
+            <h2 className="mt-2 text-xl font-bold text-blue-950 dark:text-blue-100">
               Delete workspace
             </h2>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-red-800 dark:text-red-200">
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-blue-800 dark:text-blue-200">
               This soft-deletes the workspace and removes it from normal lists.
               Only workspace owners can perform this action.
             </p>
@@ -280,7 +292,7 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
 
       {deleteConfirmOpen ? (
         <div className="fixed inset-0 z-[90] grid place-items-center bg-black/45 px-4 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-2xl border border-red-200 bg-white p-5 shadow-soft dark:border-red-900/70 dark:bg-zinc-950">
+          <div className="w-full max-w-lg rounded-2xl border border-blue-200 bg-white p-5 shadow-soft dark:border-blue-900/70 dark:bg-zinc-950">
             <h2 className="text-2xl font-bold text-gray-950 dark:text-zinc-50">
               Delete {selectedWorkspace.name}
             </h2>
@@ -307,7 +319,9 @@ export function WorkspaceSettingsView({ workspaceId }: WorkspaceSettingsViewProp
               <Button
                 type="button"
                 variant="danger"
-                disabled={deleting || deleteConfirmation !== selectedWorkspace.name}
+                disabled={
+                  deleting || deleteConfirmation !== selectedWorkspace.name
+                }
                 onClick={handleDelete}
               >
                 {deleting ? "Deleting..." : "Delete workspace"}

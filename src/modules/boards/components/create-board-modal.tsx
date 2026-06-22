@@ -6,12 +6,12 @@ import { AllowedMembersPicker } from "@/features/board-management/components/all
 import {
   getBoardManagementError,
   getPrivateBoardPermissionError,
-  useCreateBoardMutation
+  useCreateBoardMutation,
 } from "@/features/board-management/api/board-management-api";
 import { canManageBoardVisibility } from "@/features/board-management/utils/board-permissions";
 import type {
   WorkspaceMember,
-  WorkspaceRole
+  WorkspaceRole,
 } from "@/features/workspace-members/types";
 import type { Board, BoardVisibility } from "@/modules/boards/types";
 
@@ -37,7 +37,7 @@ export function CreateBoardModal({
   members = [],
   actorRole = null,
   onClose,
-  onCreated
+  onCreated,
 }: CreateBoardModalProps) {
   const [createBoard, { isLoading }] = useCreateBoardMutation();
   const [name, setName] = useState("");
@@ -96,7 +96,7 @@ export function CreateBoardModal({
         name: name.trim(),
         workspaceId: targetWorkspaceId,
         visibility,
-        allowedMembers: visibility === "PRIVATE" ? allowedMembers : []
+        allowedMembers: visibility === "PRIVATE" ? allowedMembers : [],
       }).unwrap();
       onCreated?.(result);
       onClose();
@@ -106,8 +106,8 @@ export function CreateBoardModal({
           ? getPrivateBoardPermissionError(error)
           : getBoardManagementError(
               error,
-              "You do not have permission to create this board."
-            )
+              "You do not have permission to create this board.",
+            ),
       );
     }
   }
@@ -117,7 +117,7 @@ export function CreateBoardModal({
       <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-5 shadow-soft dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               New board
             </p>
             <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
@@ -139,7 +139,7 @@ export function CreateBoardModal({
         </div>
 
         {serverError ? (
-          <div className="mt-5 flex gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+          <div className="mt-5 flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
             <AlertCircle className="mt-0.5 size-4 shrink-0" />
             <span>{serverError}</span>
           </div>
@@ -153,11 +153,11 @@ export function CreateBoardModal({
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-blue-500 dark:focus:ring-blue-500/10"
               placeholder="Sprint board"
             />
             {errors.name ? (
-              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.name}
               </span>
             ) : null}
@@ -172,7 +172,7 @@ export function CreateBoardModal({
               onChange={(event) =>
                 setVisibility(event.target.value as BoardVisibility)
               }
-              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
+              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
             >
               <option value="PUBLIC">PUBLIC</option>
               <option value="PRIVATE" disabled={!canManagePrivate}>
@@ -200,7 +200,7 @@ export function CreateBoardModal({
                 />
               </div>
               {errors.allowedMembers ? (
-                <span className="mt-2 block text-xs font-semibold text-red-600 dark:text-red-400">
+                <span className="mt-2 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                   {errors.allowedMembers}
                 </span>
               ) : null}
@@ -218,7 +218,7 @@ export function CreateBoardModal({
             <button
               type="submit"
               disabled={isLoading}
-              className="h-11 rounded-2xl bg-red-600 px-5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-red-500 dark:hover:bg-red-600"
+              className="h-11 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               {isLoading ? "Creating..." : "Create Board"}
             </button>

@@ -9,11 +9,11 @@ import {
   FolderKanban,
   Plus,
   RefreshCw,
-  UserRound
+  UserRound,
 } from "lucide-react";
 import {
   getBoardManagementError,
-  useGetBoardsByProjectQuery
+  useGetBoardsByProjectQuery,
 } from "@/features/board-management/api/board-management-api";
 import { DeleteBoardConfirm } from "@/features/board-management/components/delete-board-confirm";
 import { EditBoardModal } from "@/features/board-management/components/edit-board-modal";
@@ -27,7 +27,7 @@ import type { Board } from "@/modules/boards/types";
 import { ProjectStatusBadge } from "@/modules/projects/components/project-status-badge";
 import {
   clearSelectedProject,
-  fetchProjectById
+  fetchProjectById,
 } from "@/modules/projects/store/project-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -38,21 +38,23 @@ type ProjectDetailViewProps = {
 
 export function ProjectDetailView({
   workspaceId,
-  projectId
+  projectId,
 }: ProjectDetailViewProps) {
   const dispatch = useAppDispatch();
   const [createBoardOpen, setCreateBoardOpen] = useState(false);
   const [editBoardTarget, setEditBoardTarget] = useState<Board | null>(null);
-  const [deleteBoardTarget, setDeleteBoardTarget] = useState<Board | null>(null);
+  const [deleteBoardTarget, setDeleteBoardTarget] = useState<Board | null>(
+    null,
+  );
   const { selectedProject, loading, error } = useAppSelector(
-    (state) => state.projects
+    (state) => state.projects,
   );
   const {
     data: boards = [],
     isLoading: boardsLoading,
     isFetching: boardsFetching,
     error: boardsError,
-    refetch: refetchBoards
+    refetch: refetchBoards,
   } = useGetBoardsByProjectQuery(projectId);
   const { data: workspaceMembers = [] } =
     useGetWorkspaceMembersQuery(workspaceId);
@@ -79,7 +81,7 @@ export function ProjectDetailView({
 
   if (error) {
     return (
-      <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+      <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6 text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
         <div className="flex gap-3">
           <AlertCircle className="mt-0.5 size-5 shrink-0" />
           <div>
@@ -99,7 +101,7 @@ export function ProjectDetailView({
     <div className="space-y-6">
       <Link
         href={`/workspaces/${workspaceId}`}
-        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
+        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-500"
       >
         <ArrowLeft className="size-4" />
         Back to workspace
@@ -118,7 +120,7 @@ export function ProjectDetailView({
             </p>
           </div>
 
-          <div className="grid size-16 place-items-center rounded-2xl bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
+          <div className="grid size-16 place-items-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
             <FolderKanban className="size-8" />
           </div>
         </div>
@@ -126,7 +128,7 @@ export function ProjectDetailView({
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-zinc-800 dark:bg-zinc-950">
             <p className="flex items-center gap-2 text-sm font-bold text-gray-950 dark:text-zinc-50">
-              <FolderKanban className="size-4 text-red-600 dark:text-red-500" />
+              <FolderKanban className="size-4 text-blue-600 dark:text-blue-500" />
               Workspace
             </p>
             <p className="mt-2 truncate text-sm text-gray-500 dark:text-zinc-400">
@@ -137,7 +139,7 @@ export function ProjectDetailView({
           </div>
           <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-zinc-800 dark:bg-zinc-950">
             <p className="flex items-center gap-2 text-sm font-bold text-gray-950 dark:text-zinc-50">
-              <UserRound className="size-4 text-red-600 dark:text-red-500" />
+              <UserRound className="size-4 text-blue-600 dark:text-blue-500" />
               Created by
             </p>
             <p className="mt-2 truncate text-sm text-gray-500 dark:text-zinc-400">
@@ -154,7 +156,7 @@ export function ProjectDetailView({
       <section className="space-y-4">
         <div className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               Boards
             </p>
             <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
@@ -168,7 +170,7 @@ export function ProjectDetailView({
           <button
             type="button"
             onClick={() => setCreateBoardOpen(true)}
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-red-600 px-4 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
             <Plus className="size-5" />
             Create Board
@@ -178,21 +180,24 @@ export function ProjectDetailView({
         {boardsLoading || boardsFetching ? <BoardListSkeleton /> : null}
 
         {!boardsLoading && !boardsFetching && boardsError ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+          <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6 text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex gap-3">
                 <AlertCircle className="mt-0.5 size-5 shrink-0" />
                 <div>
                   <p className="font-bold">Unable to load boards</p>
                   <p className="mt-1 text-sm leading-6">
-                    {getBoardManagementError(boardsError, "Unable to load boards.")}
+                    {getBoardManagementError(
+                      boardsError,
+                      "Unable to load boards.",
+                    )}
                   </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => refetchBoards()}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl bg-red-600 px-4 text-sm font-bold text-white transition hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 text-sm font-bold text-white transition hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
               >
                 <RefreshCw className="size-4" />
                 Retry
@@ -201,10 +206,13 @@ export function ProjectDetailView({
           </div>
         ) : null}
 
-        {!boardsLoading && !boardsFetching && !boardsError && boards.length === 0 ? (
+        {!boardsLoading &&
+        !boardsFetching &&
+        !boardsError &&
+        boards.length === 0 ? (
           <div className="grid min-h-72 place-items-center rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="max-w-md">
-              <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
+              <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
                 <Columns3 className="size-7" />
               </div>
               <h2 className="mt-5 text-xl font-bold text-gray-950 dark:text-zinc-50">
@@ -217,7 +225,7 @@ export function ProjectDetailView({
               <button
                 type="button"
                 onClick={() => setCreateBoardOpen(true)}
-                className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-red-600 px-4 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+                className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
               >
                 <Plus className="size-5" />
                 Create Board
@@ -226,7 +234,10 @@ export function ProjectDetailView({
           </div>
         ) : null}
 
-        {!boardsLoading && !boardsFetching && !boardsError && boards.length > 0 ? (
+        {!boardsLoading &&
+        !boardsFetching &&
+        !boardsError &&
+        boards.length > 0 ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {boards.map((board) => (
               <BoardCard

@@ -12,12 +12,12 @@ import {
   Settings,
   Trash2,
   UserCog,
-  UsersRound
+  UsersRound,
 } from "lucide-react";
 import { Button, EmptyState, ErrorState, Input } from "@/components/ui";
 import {
   getWorkspaceMemberApiError,
-  useGetWorkspaceMembersQuery
+  useGetWorkspaceMembersQuery,
 } from "@/features/workspace-members/api/workspace-members-api";
 import { InviteMemberModal } from "@/features/workspace-members/components/invite-member-modal";
 import { ManageMemberRoleModal } from "@/features/workspace-members/components/manage-member-role-modal";
@@ -29,36 +29,48 @@ import { WorkspaceMembersSkeleton } from "@/features/workspace-members/component
 import { useWorkspaceMemberPermissions } from "@/features/workspace-members/hooks/use-workspace-member-permissions";
 import type {
   WorkspaceMember,
-  WorkspaceRole
+  WorkspaceRole,
 } from "@/features/workspace-members/types";
 import {
   getMemberEmail,
   getMemberName,
-  getUserId
+  getUserId,
 } from "@/features/workspace-members/utils/member-selectors";
 import {
   canEditMemberRole,
   canRemoveMember,
-  canTransferOwnership
+  canTransferOwnership,
 } from "@/features/workspace-members/utils/permission-helpers";
-import { roleLabel, workspaceRoles } from "@/features/workspace-members/utils/role-utils";
+import {
+  roleLabel,
+  workspaceRoles,
+} from "@/features/workspace-members/utils/role-utils";
 import { cn } from "@/lib/utils";
 
 type WorkspaceMembersViewProps = {
   workspaceId: string;
 };
 
-export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps) {
-  const { data: members = [], isLoading, isFetching, error, refetch } =
-    useGetWorkspaceMembersQuery(workspaceId);
+export function WorkspaceMembersView({
+  workspaceId,
+}: WorkspaceMembersViewProps) {
+  const {
+    data: members = [],
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+  } = useGetWorkspaceMembersQuery(workspaceId);
   const permissions = useWorkspaceMemberPermissions(members);
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState<WorkspaceRole | "ALL">("ALL");
   const [inviteOpen, setInviteOpen] = useState(false);
   const [roleTarget, setRoleTarget] = useState<WorkspaceMember | null>(null);
-  const [removeTarget, setRemoveTarget] = useState<WorkspaceMember | null>(null);
+  const [removeTarget, setRemoveTarget] = useState<WorkspaceMember | null>(
+    null,
+  );
   const [transferTarget, setTransferTarget] = useState<WorkspaceMember | null>(
-    null
+    null,
   );
   const [openActionsId, setOpenActionsId] = useState<string | null>(null);
 
@@ -79,7 +91,11 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <Header workspaceId={workspaceId} canInvite={false} onInvite={() => null} />
+        <Header
+          workspaceId={workspaceId}
+          canInvite={false}
+          onInvite={() => null}
+        />
         <WorkspaceMembersSkeleton />
       </div>
     );
@@ -88,7 +104,11 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
   if (error) {
     return (
       <div className="space-y-6">
-        <Header workspaceId={workspaceId} canInvite={false} onInvite={() => null} />
+        <Header
+          workspaceId={workspaceId}
+          canInvite={false}
+          onInvite={() => null}
+        />
         <ErrorState
           title="Unable to load workspace members"
           message={getWorkspaceMemberApiError(error)}
@@ -124,7 +144,7 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
               onChange={(event) =>
                 setRoleFilter(event.target.value as WorkspaceRole | "ALL")
               }
-              className="h-12 rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
+              className="h-12 rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
               aria-label="Filter by role"
             >
               <option value="ALL">All roles</option>
@@ -135,7 +155,9 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
               ))}
             </select>
             <Button variant="secondary" onClick={refetch} disabled={isFetching}>
-              <RefreshCw className={cn("size-4", isFetching && "animate-spin")} />
+              <RefreshCw
+                className={cn("size-4", isFetching && "animate-spin")}
+              />
               Refresh
             </Button>
           </div>
@@ -168,11 +190,12 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
           </div>
           <div className="divide-y divide-gray-100 dark:divide-zinc-800">
             {filteredMembers.map((member) => {
-              const isSelf = getUserId(member.user) === permissions.currentUserId;
+              const isSelf =
+                getUserId(member.user) === permissions.currentUserId;
               const canManageRole = canEditMemberRole(
                 permissions.currentMember,
                 member,
-                permissions.currentUserId
+                permissions.currentUserId,
               );
               const canRemove =
                 !isSelf &&
@@ -228,7 +251,7 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
                       aria-label={`Open actions for ${getMemberName(member)}`}
                       onClick={() =>
                         setOpenActionsId((current) =>
-                          current === member.id ? null : member.id
+                          current === member.id ? null : member.id,
                         )
                       }
                       className="grid size-10 place-items-center rounded-2xl border border-gray-200 text-gray-500 transition hover:bg-gray-50 hover:text-gray-950 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
@@ -314,7 +337,7 @@ export function WorkspaceMembersView({ workspaceId }: WorkspaceMembersViewProps)
 function Header({
   workspaceId,
   canInvite,
-  onInvite
+  onInvite,
 }: {
   workspaceId: string;
   canInvite: boolean;
@@ -324,7 +347,7 @@ function Header({
     <>
       <Link
         href={`/workspaces/${workspaceId}`}
-        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
+        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-500"
       >
         <ArrowLeft className="size-4" />
         Back to workspace
@@ -333,7 +356,7 @@ function Header({
       <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               <UsersRound className="size-4" />
               Members
             </p>
@@ -369,7 +392,7 @@ function ActionItem({
   icon,
   disabled,
   danger,
-  onClick
+  onClick,
 }: {
   children: React.ReactNode;
   icon: React.ReactNode;
@@ -386,8 +409,8 @@ function ActionItem({
       className={cn(
         "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-45",
         danger
-          ? "text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-950/30"
-          : "text-gray-700 hover:bg-gray-50 dark:text-zinc-200 dark:hover:bg-zinc-900"
+          ? "text-blue-600 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-950/30"
+          : "text-gray-700 hover:bg-gray-50 dark:text-zinc-200 dark:hover:bg-zinc-900",
       )}
     >
       {icon}

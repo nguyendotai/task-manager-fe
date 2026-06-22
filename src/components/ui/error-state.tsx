@@ -9,12 +9,17 @@ type ErrorStateProps = {
   className?: string;
 };
 
-export function ErrorState({ title, message, onRetry, className }: ErrorStateProps) {
+export function ErrorState({
+  title,
+  message,
+  onRetry,
+  className,
+}: ErrorStateProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm dark:border-red-900 dark:bg-red-950/30 dark:text-red-200",
-        className
+        "rounded-2xl border border-blue-200 bg-blue-50 p-6 text-blue-700 shadow-sm dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200",
+        className,
       )}
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

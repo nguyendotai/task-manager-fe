@@ -40,9 +40,9 @@ export function UserMenu() {
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
-        className="flex h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-white px-2.5 text-sm font-semibold text-gray-800 shadow-sm transition hover:border-red-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-red-900/70"
+        className="flex h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-white px-2.5 text-sm font-semibold text-gray-800 shadow-sm transition hover:border-blue-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-blue-900/70"
       >
-        <span className="grid size-8 place-items-center rounded-xl bg-red-600 text-xs font-bold text-white dark:bg-red-500">
+        <span className="grid size-8 place-items-center rounded-xl bg-blue-600 text-xs font-bold text-white dark:bg-blue-500">
           {user?.avatarFallback ?? "AT"}
         </span>
         <span className="hidden max-w-28 truncate xl:block">
@@ -79,7 +79,7 @@ export function UserMenu() {
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-blue-600 transition hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-950/30"
           >
             <LogOut className="size-4" />
             Logout

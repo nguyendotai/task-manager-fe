@@ -16,7 +16,7 @@ export function DeleteTaskConfirm({
   loading,
   error,
   onClose,
-  onConfirm
+  onConfirm,
 }: DeleteTaskConfirmProps) {
   if (!task) {
     return null;
@@ -27,7 +27,7 @@ export function DeleteTaskConfirm({
       <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-5 shadow-soft dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               Delete task
             </p>
             <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
@@ -45,12 +45,12 @@ export function DeleteTaskConfirm({
         </div>
 
         <p className="mt-4 text-sm leading-6 text-gray-500 dark:text-zinc-400">
-          This will delete <span className="font-bold">{task.title}</span> from the
-          board.
+          This will delete <span className="font-bold">{task.title}</span> from
+          the board.
         </p>
 
         {error ? (
-          <div className="mt-5 flex gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+          <div className="mt-5 flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
             <AlertCircle className="mt-0.5 size-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -68,7 +68,7 @@ export function DeleteTaskConfirm({
             type="button"
             disabled={loading}
             onClick={onConfirm}
-            className="h-11 rounded-2xl bg-red-600 px-5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-red-500 dark:hover:bg-red-600"
+            className="h-11 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
             {loading ? "Deleting..." : "Delete Task"}
           </button>

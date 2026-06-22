@@ -9,7 +9,7 @@ import {
   MessageSquareText,
   Send,
   UserRound,
-  X
+  X,
 } from "lucide-react";
 import {
   Button,
@@ -18,23 +18,23 @@ import {
   PriorityBadge,
   Skeleton,
   StatusBadge,
-  Textarea
+  Textarea,
 } from "@/components/ui";
 import { MemberAvatar } from "@/features/workspace-members/components/member-avatar";
 import { RoleBadge } from "@/features/workspace-members/components/role-badge";
 import type {
   WorkspaceMember,
-  WorkspaceRole
+  WorkspaceRole,
 } from "@/features/workspace-members/types";
 import {
   getMemberEmail,
   getMemberName,
-  getUserId
+  getUserId,
 } from "@/features/workspace-members/utils/member-selectors";
 import {
   clearCommentErrors,
   createComment,
-  fetchCommentsByTask
+  fetchCommentsByTask,
 } from "@/modules/comments/store/comment-slice";
 import type { CommentUser } from "@/modules/comments/types";
 import type { Label } from "@/modules/labels/types";
@@ -58,18 +58,18 @@ export function TaskDetailDrawer({
   labelsById = {},
   members = [],
   actorRole = null,
-  onClose
+  onClose,
 }: TaskDetailDrawerProps) {
   const dispatch = useAppDispatch();
   const [content, setContent] = useState("");
   const { byTaskId, loadingByTaskId, errorByTaskId, creating, createError } =
     useAppSelector((state) => state.comments);
-  const comments = task ? byTaskId[task.id] ?? [] : [];
-  const loading = task ? loadingByTaskId[task.id] ?? false : false;
-  const error = task ? errorByTaskId[task.id] ?? null : null;
+  const comments = task ? (byTaskId[task.id] ?? []) : [];
+  const loading = task ? (loadingByTaskId[task.id] ?? false) : false;
+  const error = task ? (errorByTaskId[task.id] ?? null) : null;
   const readonly = !canUpdateTasks(actorRole);
   const membersByUserId = new Map(
-    members.map((member) => [getUserId(member.user), member])
+    members.map((member) => [getUserId(member.user), member]),
   );
 
   useEffect(() => {
@@ -96,8 +96,8 @@ export function TaskDetailDrawer({
     const result = await dispatch(
       createComment({
         taskId: task.id,
-        content: content.trim()
-      })
+        content: content.trim(),
+      }),
     );
 
     if (createComment.fulfilled.match(result)) {
@@ -157,7 +157,9 @@ export function TaskDetailDrawer({
 
             <div className="grid gap-3 sm:grid-cols-2">
               <InfoCard
-                icon={<CalendarDays className="size-4 text-red-600 dark:text-red-500" />}
+                icon={
+                  <CalendarDays className="size-4 text-blue-600 dark:text-blue-500" />
+                }
                 label="Due date"
                 value={
                   task.dueDate
@@ -166,7 +168,9 @@ export function TaskDetailDrawer({
                 }
               />
               <InfoCard
-                icon={<UserRound className="size-4 text-red-600 dark:text-red-500" />}
+                icon={
+                  <UserRound className="size-4 text-blue-600 dark:text-blue-500" />
+                }
                 label="Assignees"
                 value={
                   task.assignees.length > 0
@@ -188,7 +192,9 @@ export function TaskDetailDrawer({
                 ) : null}
                 {task.assignees.map((assignee, index) => {
                   const member = membersByUserId.get(getTaskMemberId(assignee));
-                  const label = member ? getMemberName(member) : getAssigneeLabel(assignee);
+                  const label = member
+                    ? getMemberName(member)
+                    : getAssigneeLabel(assignee);
 
                   return (
                     <div
@@ -249,7 +255,7 @@ export function TaskDetailDrawer({
           <section className="mt-8">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+                <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
                   <MessageSquareText className="size-4" />
                   Comments
                 </p>
@@ -262,22 +268,22 @@ export function TaskDetailDrawer({
               </span>
             </div>
 
-          {loading ? (
-            <div className="mt-5 space-y-3">
-              {Array.from({ length: 3 }).map((_, index) => (
+            {loading ? (
+              <div className="mt-5 space-y-3">
+                {Array.from({ length: 3 }).map((_, index) => (
                   <Skeleton key={index} className="h-20 rounded-2xl" />
                 ))}
-            </div>
-          ) : null}
+              </div>
+            ) : null}
 
-          {!loading && error ? (
+            {!loading && error ? (
               <ErrorState
                 className="mt-5"
                 title="Unable to load comments"
                 message={error}
                 onRetry={() => task && dispatch(fetchCommentsByTask(task.id))}
               />
-          ) : null}
+            ) : null}
 
             {!loading && !error ? (
               <div className="mt-5 space-y-3">
@@ -302,7 +308,7 @@ export function TaskDetailDrawer({
           className="border-t border-gray-100 p-4 dark:border-zinc-800"
         >
           {createError ? (
-            <div className="mb-3 flex gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+            <div className="mb-3 flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
               <AlertCircle className="mt-0.5 size-4 shrink-0" />
               <span>{createError}</span>
             </div>
@@ -335,7 +341,7 @@ export function TaskDetailDrawer({
 function InfoCard({
   icon,
   label,
-  value
+  value,
 }: {
   icon: React.ReactNode;
   label: string;
@@ -355,7 +361,7 @@ function InfoCard({
 }
 
 function CommentItem({
-  comment
+  comment,
 }: {
   comment: {
     content: string;
@@ -364,9 +370,9 @@ function CommentItem({
   };
 }) {
   const userName =
-    typeof comment.user === "string" ? "User" : comment.user.name ?? "User";
+    typeof comment.user === "string" ? "User" : (comment.user.name ?? "User");
   const userEmail =
-    typeof comment.user === "string" ? "" : comment.user.email ?? "";
+    typeof comment.user === "string" ? "" : (comment.user.email ?? "");
 
   return (
     <article className="flex gap-3 rounded-2xl border border-gray-100 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
@@ -379,7 +385,9 @@ function CommentItem({
             {userName}
           </p>
           {userEmail ? (
-            <p className="text-xs text-gray-400 dark:text-zinc-500">{userEmail}</p>
+            <p className="text-xs text-gray-400 dark:text-zinc-500">
+              {userEmail}
+            </p>
           ) : null}
           <p className="text-xs font-semibold text-gray-400 dark:text-zinc-500">
             {comment.createdAt

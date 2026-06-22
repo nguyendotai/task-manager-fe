@@ -11,17 +11,17 @@ export function EmptyState({
   icon,
   title,
   description,
-  className
+  className,
 }: EmptyStateProps) {
   return (
     <div
       className={cn(
         "grid min-h-56 place-items-center rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900",
-        className
+        className,
       )}
     >
       <div className="max-w-md">
-        <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
+        <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
           {icon}
         </div>
         <h2 className="mt-5 text-xl font-bold text-gray-950 dark:text-zinc-50">

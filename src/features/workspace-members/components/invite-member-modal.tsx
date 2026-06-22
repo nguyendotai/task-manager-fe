@@ -6,17 +6,17 @@ import { Button, Input, Modal } from "@/components/ui";
 import { useToast } from "@/components/providers/toast-provider";
 import {
   getWorkspaceMemberApiError,
-  useInviteWorkspaceMemberMutation
+  useInviteWorkspaceMemberMutation,
 } from "@/features/workspace-members/api/workspace-members-api";
 import type {
   InvitationRole,
-  WorkspaceRole
+  WorkspaceRole,
 } from "@/features/workspace-members/types";
 import {
   canAssignRole,
   inviteRoles,
   roleDescription,
-  roleLabel
+  roleLabel,
 } from "@/features/workspace-members/utils/role-utils";
 
 type InviteMemberModalProps = {
@@ -35,7 +35,7 @@ export function InviteMemberModal({
   open,
   workspaceId,
   actorRole,
-  onClose
+  onClose,
 }: InviteMemberModalProps) {
   const { toast } = useToast();
   const [inviteMember, { isLoading }] = useInviteWorkspaceMemberMutation();
@@ -84,13 +84,13 @@ export function InviteMemberModal({
         workspaceId,
         data: {
           email: email.trim(),
-          role
-        }
+          role,
+        },
       }).unwrap();
       toast({
         title: "Invitation sent",
         description: `${email.trim()} was invited as ${roleLabel[role]}.`,
-        variant: "success"
+        variant: "success",
       });
       onClose();
     } catch (error) {
@@ -99,13 +99,18 @@ export function InviteMemberModal({
         description:
           getWorkspaceMemberApiError(error) ||
           "You do not have permission to invite members.",
-        variant: "error"
+        variant: "error",
       });
     }
   }
 
   return (
-    <Modal open={open} title="Invite member" eyebrow="Members" onClose={onClose}>
+    <Modal
+      open={open}
+      title="Invite member"
+      eyebrow="Members"
+      onClose={onClose}
+    >
       <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
         <label className="block">
           <span className="text-sm font-bold text-gray-700 dark:text-zinc-200">
@@ -123,7 +128,7 @@ export function InviteMemberModal({
             />
           </span>
           {errors.email ? (
-            <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+            <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
               {errors.email}
             </span>
           ) : null}
@@ -136,7 +141,7 @@ export function InviteMemberModal({
           <select
             value={role}
             onChange={(event) => setRole(event.target.value as InvitationRole)}
-            className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
+            className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
           >
             {inviteRoles.map((item) => (
               <option
@@ -157,7 +162,7 @@ export function InviteMemberModal({
             {roleDescription[role]}
           </p>
           {errors.role ? (
-            <span className="mt-1 flex gap-1.5 text-xs font-semibold text-red-600 dark:text-red-400">
+            <span className="mt-1 flex gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400">
               <AlertCircle className="size-3.5" />
               {errors.role}
             </span>

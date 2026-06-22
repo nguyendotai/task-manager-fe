@@ -7,13 +7,13 @@ import { Button, Input, Modal } from "@/components/ui";
 import { useToast } from "@/components/providers/toast-provider";
 import {
   getWorkspaceMemberApiError,
-  useTransferWorkspaceOwnershipMutation
+  useTransferWorkspaceOwnershipMutation,
 } from "@/features/workspace-members/api/workspace-members-api";
 import { MemberAvatar } from "@/features/workspace-members/components/member-avatar";
 import type { WorkspaceMember } from "@/features/workspace-members/types";
 import {
   getMemberEmail,
-  getMemberName
+  getMemberName,
 } from "@/features/workspace-members/utils/member-selectors";
 
 type TransferOwnershipModalProps = {
@@ -27,7 +27,7 @@ export function TransferOwnershipModal({
   open,
   workspaceId,
   member,
-  onClose
+  onClose,
 }: TransferOwnershipModalProps) {
   const router = useRouter();
   const { toast } = useToast();
@@ -57,15 +57,18 @@ export function TransferOwnershipModal({
       toast({
         title: "Ownership transferred",
         description: `${getMemberName(member)} is now the workspace owner.`,
-        variant: "success"
+        variant: "success",
       });
       onClose();
       router.refresh();
     } catch (error) {
       toast({
         title: "Unable to transfer ownership",
-        description: getWorkspaceMemberApiError(error, "Only workspace owners can transfer ownership."),
-        variant: "error"
+        description: getWorkspaceMemberApiError(
+          error,
+          "Only workspace owners can transfer ownership.",
+        ),
+        variant: "error",
       });
     }
   }
@@ -88,10 +91,10 @@ export function TransferOwnershipModal({
               {getMemberEmail(member)}
             </p>
           </div>
-          <Crown className="size-5 text-red-600 dark:text-red-400" />
+          <Crown className="size-5 text-blue-600 dark:text-blue-400" />
         </div>
 
-        <div className="flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-800 dark:border-red-900/70 dark:bg-red-950/30 dark:text-red-200">
+        <div className="flex gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm font-semibold text-blue-800 dark:border-blue-900/70 dark:bg-blue-950/30 dark:text-blue-200">
           <AlertTriangle className="mt-0.5 size-4 shrink-0" />
           This action transfers owner permissions. Your role may be changed and
           some workspace settings may no longer be available to you.

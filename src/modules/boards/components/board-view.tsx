@@ -16,17 +16,12 @@ import {
   Share2,
   Table2,
   Trash2,
-  UsersRound
+  UsersRound,
 } from "lucide-react";
-import {
-  Button,
-  EmptyState,
-  ErrorState,
-  Skeleton
-} from "@/components/ui";
+import { Button, EmptyState, ErrorState, Skeleton } from "@/components/ui";
 import {
   getBoardManagementError,
-  useGetBoardQuery
+  useGetBoardQuery,
 } from "@/features/board-management/api/board-management-api";
 import { BoardVisibilityBadge } from "@/features/board-management/components/board-visibility-badge";
 import { DeleteBoardConfirm } from "@/features/board-management/components/delete-board-confirm";
@@ -37,7 +32,7 @@ import { defaultBoardColumns } from "@/modules/boards/constants";
 import type { BoardColumn } from "@/modules/boards/types";
 import {
   clearLabels,
-  fetchLabelsByWorkspace
+  fetchLabelsByWorkspace,
 } from "@/modules/labels/store/label-slice";
 import { useGetWorkspaceMembersQuery } from "@/features/workspace-members/api/workspace-members-api";
 import { useWorkspaceMemberPermissions } from "@/features/workspace-members/hooks/use-workspace-member-permissions";
@@ -47,7 +42,7 @@ import { DeleteTaskConfirm } from "@/modules/tasks/components/delete-task-confir
 import { TaskCard } from "@/modules/tasks/components/task-card";
 import {
   TaskFilters,
-  type TaskFiltersState
+  type TaskFiltersState,
 } from "@/modules/tasks/components/task-filters";
 import { TaskFormModal } from "@/modules/tasks/components/task-form-modal";
 import { TaskDetailDrawer } from "@/modules/tasks/components/task-detail-drawer";
@@ -57,17 +52,17 @@ import {
   createTask,
   deleteTask,
   fetchTasksByColumn,
-  updateTask
+  updateTask,
 } from "@/modules/tasks/store/tasks-slice";
 import type { Task, TaskFormValues } from "@/modules/tasks/types";
 import type { TaskStatus } from "@/modules/tasks/types";
 import {
   canDeleteTasks,
-  canUpdateTasks
+  canUpdateTasks,
 } from "@/modules/tasks/utils/task-permissions";
 import {
   getTaskAssigneeIds,
-  getTaskVisibility
+  getTaskVisibility,
 } from "@/modules/tasks/utils/task-visibility";
 import { cn } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -90,7 +85,7 @@ const tabs = [
   { label: "Table", icon: Table2 },
   { label: "List", icon: List },
   { label: "Board", icon: LayoutGrid, active: true },
-  { label: "Timeline", icon: Clock3 }
+  { label: "Timeline", icon: Clock3 },
 ];
 
 const emptyFilters: TaskFiltersState = {
@@ -98,7 +93,7 @@ const emptyFilters: TaskFiltersState = {
   statuses: [],
   labels: [],
   assignees: [],
-  visibilities: []
+  visibilities: [],
 };
 
 export function BoardView({ workspaceId, boardId }: BoardViewProps) {
@@ -117,7 +112,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
     data: selectedBoard,
     isLoading: boardLoading,
     error: boardError,
-    refetch: refetchBoard
+    refetch: refetchBoard,
   } = useGetBoardQuery(boardId);
   const {
     byColumnId,
@@ -128,7 +123,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
     deleting,
     createError,
     updateError,
-    deleteError
+    deleteError,
   } = useAppSelector((state) => state.tasks);
   const { items: workspaceLabels } = useAppSelector((state) => state.labels);
   const { data: workspaceMembers = [], isLoading: membersLoading } =
@@ -150,7 +145,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
   const columns = useMemo(() => {
     if (selectedBoard?.columns && selectedBoard.columns.length > 0) {
       return [...selectedBoard.columns].sort(
-        (first, second) => (first.order ?? 0) - (second.order ?? 0)
+        (first, second) => (first.order ?? 0) - (second.order ?? 0),
       );
     }
 
@@ -171,7 +166,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
 
   const allTasks = useMemo(
     () => columns.flatMap((column) => byColumnId[column.id] ?? []),
-    [byColumnId, columns]
+    [byColumnId, columns],
   );
 
   const labelsById = useMemo(
@@ -181,7 +176,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
         accumulator[label.name] = label;
         return accumulator;
       }, {}),
-    [workspaceLabels]
+    [workspaceLabels],
   );
 
   const labelOptions = useMemo(() => {
@@ -190,7 +185,10 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
       .map((label) => labelsById[label]?.name ?? label);
 
     return Array.from(
-      new Set([...workspaceLabels.map((label) => label.name), ...taskLabelNames])
+      new Set([
+        ...workspaceLabels.map((label) => label.name),
+        ...taskLabelNames,
+      ]),
     ).sort();
   }, [allTasks, labelsById, workspaceLabels]);
 
@@ -238,8 +236,8 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
           status: values.status,
           visibility: values.visibility,
           dueDate: values.dueDate,
-          order: values.order
-        })
+          order: values.order,
+        }),
       );
 
       if (createTask.fulfilled.match(result)) {
@@ -255,9 +253,9 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
         data: {
           ...values,
           boardId,
-          workspaceId
-        }
-      })
+          workspaceId,
+        },
+      }),
     );
 
     if (updateTask.fulfilled.match(result)) {
@@ -280,7 +278,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
   async function handleTaskDrop(
     targetColumn: BoardColumn,
     targetTasks: Task[],
-    targetIndex: number
+    targetIndex: number,
   ) {
     if (!draggedTask) {
       return;
@@ -288,7 +286,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
 
     const targetColumnId = targetColumn.id;
     const targetTasksWithoutDragged = targetTasks.filter(
-      (task) => task.id !== draggedTask.task.id
+      (task) => task.id !== draggedTask.task.id,
     );
     const order = getDropOrder(targetTasksWithoutDragged, targetIndex);
 
@@ -300,9 +298,9 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
           status: getStatusForColumn(targetColumn),
           order,
           boardId,
-          workspaceId
-        }
-      })
+          workspaceId,
+        },
+      }),
     );
 
     setDraggedTask(null);
@@ -313,7 +311,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
     <div className="space-y-6">
       <Link
         href={`/workspaces/${workspaceId}`}
-        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
+        className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-500"
       >
         <ArrowLeft className="size-4" />
         Back to workspace
@@ -325,7 +323,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
             <div className="flex flex-wrap items-center gap-3">
               <BoardStatusBadge status={selectedBoard.status} />
               <BoardVisibilityBadge board={selectedBoard} />
-              <span className="inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700 ring-1 ring-red-200 dark:bg-red-950/40 dark:text-red-300 dark:ring-red-900/70">
+              <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 ring-1 ring-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:ring-blue-900/70">
                 <CheckCircle2 className="size-3.5" />
                 Board view
               </span>
@@ -351,7 +349,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
                 ))}
               </div>
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 dark:text-zinc-400">
-                <UsersRound className="size-4 text-red-600 dark:text-red-500" />
+                <UsersRound className="size-4 text-blue-600 dark:text-blue-500" />
                 Members placeholder
               </span>
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 dark:text-zinc-400">
@@ -364,11 +362,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
           </div>
 
           <div className="relative flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-            >
+            <Button type="button" variant="secondary" size="sm">
               <Share2 className="size-4" />
               Share
             </Button>
@@ -379,7 +373,10 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
               size="sm"
             >
               <Filter className="size-4" />
-              Filter {getActiveFilterCount(filters) > 0 ? `(${getActiveFilterCount(filters)})` : ""}
+              Filter{" "}
+              {getActiveFilterCount(filters) > 0
+                ? `(${getActiveFilterCount(filters)})`
+                : ""}
             </Button>
             {filterPanelOpen ? (
               <>
@@ -432,7 +429,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
                         setDeleteBoardOpen(true);
                         setBoardActionsOpen(false);
                       }}
-                      className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold text-red-600 transition hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-950/30"
+                      className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold text-blue-600 transition hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-950/30"
                     >
                       <Trash2 className="size-4" />
                       Delete board
@@ -459,8 +456,8 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
                 className={cn(
                   "inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-2xl px-4 text-sm font-bold transition",
                   tab.active
-                    ? "bg-red-600 text-white shadow-lg shadow-red-600/20 dark:bg-red-500"
-                    : "text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20 dark:bg-blue-500"
+                    : "text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 dark:text-zinc-400 dark:hover:bg-zinc-800",
                 )}
               >
                 <Icon className="size-4" />
@@ -477,7 +474,11 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
             <KanbanColumn
               key={column.id}
               column={column}
-              tasks={filterTasks(byColumnId[column.id] ?? [], filters, labelsById)}
+              tasks={filterTasks(
+                byColumnId[column.id] ?? [],
+                filters,
+                labelsById,
+              )}
               labelsById={labelsById}
               members={workspaceMembers}
               draggingTaskId={draggedTask?.task.id ?? null}
@@ -487,7 +488,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
               onDragStart={(task) =>
                 setDraggedTask({
                   task,
-                  sourceColumnId: task.columnId ?? task.column
+                  sourceColumnId: task.columnId ?? task.column,
                 })
               }
               onDragEnd={() => {
@@ -495,11 +496,17 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
                 setDragOverColumnId(null);
               }}
               onDragOver={() => setDragOverColumnId(column.id)}
-              onDrop={(targetIndex) => handleTaskDrop(column, byColumnId[column.id] ?? [], targetIndex)}
+              onDrop={(targetIndex) =>
+                handleTaskDrop(column, byColumnId[column.id] ?? [], targetIndex)
+              }
               onRetry={() => dispatch(fetchTasksByColumn(column.id))}
               onAdd={() => {
                 dispatch(clearTaskErrors());
-                setTaskModal({ mode: "create", columnId: column.id, task: null });
+                setTaskModal({
+                  mode: "create",
+                  columnId: column.id,
+                  task: null,
+                });
               }}
               onEdit={
                 canUpdateTask
@@ -590,7 +597,7 @@ function KanbanColumn({
   onAdd,
   onEdit,
   onOpenDetail,
-  onDelete
+  onDelete,
 }: {
   column: BoardColumn;
   tasks: Task[];
@@ -622,7 +629,8 @@ function KanbanColumn({
       }}
       className={cn(
         "flex w-80 shrink-0 flex-col rounded-2xl border border-gray-200 bg-gray-50 p-4 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-950",
-        dragOver && "border-red-300 bg-red-50/60 ring-4 ring-red-600/10 dark:border-red-900/70 dark:bg-red-950/20"
+        dragOver &&
+          "border-blue-300 bg-blue-50/60 ring-4 ring-blue-600/10 dark:border-blue-900/70 dark:bg-blue-950/20",
       )}
     >
       <div className="flex items-center justify-between gap-3">
@@ -697,7 +705,7 @@ function KanbanColumn({
                 }}
                 className={cn(
                   "cursor-grab active:cursor-grabbing",
-                  draggingTaskId === task.id && "opacity-45"
+                  draggingTaskId === task.id && "opacity-45",
                 )}
               >
                 <TaskCard
@@ -730,11 +738,11 @@ function TaskSkeleton() {
 function filterTasks(
   tasks: Task[],
   filters: TaskFiltersState,
-  labelsById: Record<string, Label>
+  labelsById: Record<string, Label>,
 ) {
   return tasks.filter((task) => {
     const taskLabelNames = task.labels.map(
-      (label) => labelsById[label]?.name ?? label
+      (label) => labelsById[label]?.name ?? label,
     );
     const assigneeIds = getTaskAssigneeIds(task);
     const matchesPriority =

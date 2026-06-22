@@ -7,15 +7,18 @@ import { useToast } from "@/components/providers/toast-provider";
 import {
   getBoardManagementError,
   getPrivateBoardPermissionError,
-  useUpdateBoardMutation
+  useUpdateBoardMutation,
 } from "@/features/board-management/api/board-management-api";
 import { AllowedMembersPicker } from "@/features/board-management/components/allowed-members-picker";
 import {
   getAllowedMemberIds,
-  getBoardVisibility
+  getBoardVisibility,
 } from "@/features/board-management/utils/board-visibility";
 import { canManageBoardVisibility } from "@/features/board-management/utils/board-permissions";
-import type { WorkspaceMember, WorkspaceRole } from "@/features/workspace-members/types";
+import type {
+  WorkspaceMember,
+  WorkspaceRole,
+} from "@/features/workspace-members/types";
 import type { Board, BoardVisibility } from "@/modules/boards/types";
 
 type EditBoardModalProps = {
@@ -42,7 +45,7 @@ export function EditBoardModal({
   members,
   actorRole,
   onClose,
-  onUpdated
+  onUpdated,
 }: EditBoardModalProps) {
   const { toast } = useToast();
   const [updateBoard, { isLoading }] = useUpdateBoardMutation();
@@ -103,13 +106,13 @@ export function EditBoardModal({
         data: {
           name: name.trim(),
           visibility,
-          allowedMembers: visibility === "PRIVATE" ? allowedMembers : []
-        }
+          allowedMembers: visibility === "PRIVATE" ? allowedMembers : [],
+        },
       }).unwrap();
       toast({
         title: "Board updated",
         description: `${updatedBoard.name} settings were saved.`,
-        variant: "success"
+        variant: "success",
       });
       onUpdated?.(updatedBoard);
       onClose();
@@ -119,8 +122,11 @@ export function EditBoardModal({
         description:
           visibility === "PRIVATE"
             ? getPrivateBoardPermissionError(error)
-            : getBoardManagementError(error, "You do not have permission to update this board."),
-        variant: "error"
+            : getBoardManagementError(
+                error,
+                "You do not have permission to update this board.",
+              ),
+        variant: "error",
       });
     }
   }
@@ -138,7 +144,7 @@ export function EditBoardModal({
             className="mt-2"
           />
           {errors.name ? (
-            <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+            <span className="mt-1 block text-xs font-semibold text-blue-600 dark:text-blue-400">
               {errors.name}
             </span>
           ) : null}
@@ -153,7 +159,7 @@ export function EditBoardModal({
             onChange={(event) =>
               setVisibility(event.target.value as BoardVisibility)
             }
-            className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
+            className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
           >
             <option value="PUBLIC">PUBLIC</option>
             <option value="PRIVATE" disabled={!canManagePrivate}>
@@ -181,7 +187,7 @@ export function EditBoardModal({
               />
             </div>
             {errors.allowedMembers ? (
-              <span className="mt-2 block text-xs font-semibold text-red-600 dark:text-red-400">
+              <span className="mt-2 block text-xs font-semibold text-blue-600 dark:text-blue-400">
                 {errors.allowedMembers}
               </span>
             ) : null}

@@ -3,12 +3,18 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { Clock3, ListTodo, RefreshCw, Star, UserRound } from "lucide-react";
-import { Button, Card, CardSkeleton, EmptyState, ErrorState } from "@/components/ui";
+import {
+  Button,
+  Card,
+  CardSkeleton,
+  EmptyState,
+  ErrorState,
+} from "@/components/ui";
 import { TaskCard } from "@/modules/tasks/components/task-card";
 import { TaskDetailDrawer } from "@/modules/tasks/components/task-detail-drawer";
 import {
   fetchTaskList,
-  toggleTaskMark
+  toggleTaskMark,
 } from "@/modules/tasks/store/tasks-slice";
 import type { TaskListKind } from "@/modules/tasks/types";
 import type { Task } from "@/modules/tasks/types";
@@ -31,31 +37,33 @@ const pageConfig: Record<
   my: {
     eyebrow: "My Tasks",
     title: "Tasks assigned to you",
-    description: "Review work that has been assigned to your account across workspaces.",
+    description:
+      "Review work that has been assigned to your account across workspaces.",
     emptyText: "No assigned tasks yet.",
-    icon: UserRound
+    icon: UserRound,
   },
   recent: {
     eyebrow: "Recent",
     title: "Recently created tasks",
     description: "Track new work created in workspaces you can access.",
     emptyText: "No recent tasks found.",
-    icon: Clock3
+    icon: Clock3,
   },
   marked: {
     eyebrow: "Marked",
     title: "Marked tasks",
-    description: "Keep important tasks close by with your personal marked list.",
+    description:
+      "Keep important tasks close by with your personal marked list.",
     emptyText: "You have not marked any tasks yet.",
-    icon: Star
-  }
+    icon: Star,
+  },
 };
 
 export function TaskListView({ kind }: TaskListViewProps) {
   const dispatch = useAppDispatch();
   const [detailTask, setDetailTask] = useState<Task | null>(null);
   const { lists, loadingLists, listErrors, markError } = useAppSelector(
-    (state) => state.tasks
+    (state) => state.tasks,
   );
   const config = pageConfig[kind];
   const Icon = config.icon;
@@ -72,7 +80,7 @@ export function TaskListView({ kind }: TaskListViewProps) {
       <Card className="p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               <Icon className="size-4" />
               {config.eyebrow}
             </p>
@@ -104,7 +112,7 @@ export function TaskListView({ kind }: TaskListViewProps) {
       ) : null}
 
       {markError ? (
-        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200">
+        <div className="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-200">
           {markError}
         </div>
       ) : null}
@@ -118,7 +126,10 @@ export function TaskListView({ kind }: TaskListViewProps) {
       ) : null}
 
       {!loading && !error && tasks.length === 0 ? (
-        <EmptyState icon={<Icon className="size-7" />} title={config.emptyText} />
+        <EmptyState
+          icon={<Icon className="size-7" />}
+          title={config.emptyText}
+        />
       ) : null}
 
       {!loading && !error && tasks.length > 0 ? (
@@ -132,8 +143,8 @@ export function TaskListView({ kind }: TaskListViewProps) {
                 dispatch(
                   toggleTaskMark({
                     taskId: task.id,
-                    marked: !task.isMarked
-                  })
+                    marked: !task.isMarked,
+                  }),
                 )
               }
             />

@@ -6,7 +6,7 @@ import { MemberAvatar } from "@/features/workspace-members/components/member-ava
 import type { WorkspaceMember } from "@/features/workspace-members/types";
 import {
   getMemberName,
-  getUserId
+  getUserId,
 } from "@/features/workspace-members/utils/member-selectors";
 import { cn } from "@/lib/utils";
 import type { Label } from "@/modules/labels/types";
@@ -31,10 +31,10 @@ export function TaskCard({
   onEdit,
   onDelete,
   onToggleMark,
-  onOpenDetail
+  onOpenDetail,
 }: TaskCardProps) {
   const membersByUserId = new Map(
-    members.map((member) => [getUserId(member.user), member])
+    members.map((member) => [getUserId(member.user), member]),
   );
   const assignees = task.assignees.length > 0 ? task.assignees : ["Unassigned"];
 
@@ -54,8 +54,8 @@ export function TaskCard({
         }
       }}
       className={cn(
-        "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-soft dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-red-900/70",
-        onOpenDetail && "cursor-pointer"
+        "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-soft dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-blue-900/70",
+        onOpenDetail && "cursor-pointer",
       )}
     >
       <div className="flex items-start justify-between gap-3">
@@ -68,16 +68,18 @@ export function TaskCard({
           {onToggleMark ? (
             <button
               type="button"
-              aria-label={task.isMarked ? `Unmark ${task.title}` : `Mark ${task.title}`}
+              aria-label={
+                task.isMarked ? `Unmark ${task.title}` : `Mark ${task.title}`
+              }
               onClick={(event) => {
                 event.stopPropagation();
                 onToggleMark(task);
               }}
               className={cn(
-                "grid size-8 place-items-center rounded-xl transition hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 dark:hover:text-red-400",
+                "grid size-8 place-items-center rounded-xl transition hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/30 dark:hover:text-blue-400",
                 task.isMarked
-                  ? "text-red-600 dark:text-red-400"
-                  : "text-gray-400"
+                  ? "text-blue-600 dark:text-blue-400"
+                  : "text-gray-400",
               )}
             >
               <Star className={cn("size-4", task.isMarked && "fill-current")} />
@@ -91,7 +93,7 @@ export function TaskCard({
                 event.stopPropagation();
                 onEdit(task);
               }}
-              className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-gray-50 hover:text-red-600 dark:hover:bg-zinc-800 dark:hover:text-red-400"
+              className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-gray-50 hover:text-blue-600 dark:hover:bg-zinc-800 dark:hover:text-blue-400"
             >
               <Pencil className="size-4" />
             </button>
@@ -104,7 +106,7 @@ export function TaskCard({
                 event.stopPropagation();
                 onDelete(task);
               }}
-              className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 dark:hover:text-red-400"
+              className="grid size-8 place-items-center rounded-xl text-gray-400 transition hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/30 dark:hover:text-blue-400"
             >
               <Trash2 className="size-4" />
             </button>
@@ -140,13 +142,17 @@ export function TaskCard({
       <div className="mt-4 flex items-center justify-between gap-3 border-t border-gray-100 pt-4 dark:border-zinc-800">
         <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-zinc-400">
           <CalendarDays className="size-4" />
-          {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "No due date"}
+          {task.dueDate
+            ? new Date(task.dueDate).toLocaleDateString()
+            : "No due date"}
         </span>
 
         <div className="flex -space-x-2">
           {assignees.slice(0, 3).map((assignee, index) => {
             const member = membersByUserId.get(getTaskMemberId(assignee));
-            const label = member ? getMemberName(member) : getAssigneeLabel(assignee);
+            const label = member
+              ? getMemberName(member)
+              : getAssigneeLabel(assignee);
 
             return member ? (
               <span

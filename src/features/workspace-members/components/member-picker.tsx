@@ -10,7 +10,7 @@ import type { WorkspaceMember } from "@/features/workspace-members/types";
 import {
   getMemberEmail,
   getMemberName,
-  getUserId
+  getUserId,
 } from "@/features/workspace-members/utils/member-selectors";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +33,7 @@ export function MemberPicker({
   disabled,
   placeholder = "Search members",
   emptyText = "No members found.",
-  maxVisible = 80
+  maxVisible = 80,
 }: MemberPickerProps) {
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -43,15 +43,15 @@ export function MemberPicker({
 
   const normalizedMembers = useMemo(
     () => members.filter((member) => Boolean(getUserId(member.user))),
-    [members]
+    [members],
   );
 
   const selectedMembers = useMemo(
     () =>
       normalizedMembers.filter((member) =>
-        selectedSet.has(getUserId(member.user))
+        selectedSet.has(getUserId(member.user)),
       ),
-    [normalizedMembers, selectedSet]
+    [normalizedMembers, selectedSet],
   );
 
   const filteredMembers = useMemo(() => {
@@ -84,7 +84,7 @@ export function MemberPicker({
     onChange(
       selectedSet.has(userId)
         ? value.filter((item) => item !== userId)
-        : [...value, userId]
+        : [...value, userId],
     );
   }
 
@@ -92,7 +92,7 @@ export function MemberPicker({
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setActiveIndex((index) =>
-        Math.min(index + 1, Math.max(filteredMembers.length - 1, 0))
+        Math.min(index + 1, Math.max(filteredMembers.length - 1, 0)),
       );
     }
 
@@ -111,7 +111,7 @@ export function MemberPicker({
     <div
       className={cn(
         "rounded-2xl border border-gray-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-950",
-        disabled && "opacity-70"
+        disabled && "opacity-70",
       )}
     >
       {selectedMembers.length > 0 ? (
@@ -122,16 +122,18 @@ export function MemberPicker({
             return (
               <span
                 key={userId}
-                className="inline-flex max-w-full items-center gap-2 rounded-full bg-red-50 px-2 py-1 text-xs font-bold text-red-700 ring-1 ring-red-100 dark:bg-red-950/30 dark:text-red-200 dark:ring-red-900/60"
+                className="inline-flex max-w-full items-center gap-2 rounded-full bg-blue-50 px-2 py-1 text-xs font-bold text-blue-700 ring-1 ring-blue-100 dark:bg-blue-950/30 dark:text-blue-200 dark:ring-blue-900/60"
               >
                 <MemberAvatar member={member} size="sm" />
-                <span className="max-w-32 truncate">{getMemberName(member)}</span>
+                <span className="max-w-32 truncate">
+                  {getMemberName(member)}
+                </span>
                 <button
                   type="button"
                   aria-label={`Remove ${getMemberName(member)}`}
                   disabled={disabled}
                   onClick={() => toggleMember(userId)}
-                  className="grid size-5 place-items-center rounded-full hover:bg-red-100 disabled:cursor-not-allowed dark:hover:bg-red-900/60"
+                  className="grid size-5 place-items-center rounded-full hover:bg-blue-100 disabled:cursor-not-allowed dark:hover:bg-blue-900/60"
                 >
                   <X className="size-3" />
                 </button>
@@ -157,7 +159,10 @@ export function MemberPicker({
         ) : null}
       </div>
 
-      <div ref={listRef} className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1">
+      <div
+        ref={listRef}
+        className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1"
+      >
         {!loading && filteredMembers.length === 0 ? (
           <p className="rounded-2xl bg-gray-50 px-3 py-4 text-center text-sm font-semibold text-gray-400 dark:bg-zinc-900 dark:text-zinc-500">
             {emptyText}
@@ -177,16 +182,16 @@ export function MemberPicker({
               className={cn(
                 "flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition disabled:cursor-not-allowed",
                 index === activeIndex
-                  ? "bg-red-50 dark:bg-red-950/30"
-                  : "bg-gray-50 hover:bg-red-50 dark:bg-zinc-900 dark:hover:bg-red-950/30"
+                  ? "bg-blue-50 dark:bg-blue-950/30"
+                  : "bg-gray-50 hover:bg-blue-50 dark:bg-zinc-900 dark:hover:bg-blue-950/30",
               )}
             >
               <span
                 className={cn(
                   "grid size-5 shrink-0 place-items-center rounded-md border text-white",
                   checked
-                    ? "border-red-600 bg-red-600"
-                    : "border-gray-300 bg-white text-transparent dark:border-zinc-700 dark:bg-zinc-950"
+                    ? "border-blue-600 bg-blue-600"
+                    : "border-gray-300 bg-white text-transparent dark:border-zinc-700 dark:bg-zinc-950",
                 )}
               >
                 <Check className="size-3.5" />
@@ -208,7 +213,8 @@ export function MemberPicker({
 
       {normalizedMembers.length > maxVisible ? (
         <p className="mt-2 text-xs font-semibold text-gray-400 dark:text-zinc-500">
-          Showing {Math.min(filteredMembers.length, maxVisible)} members. Search to narrow the list.
+          Showing {Math.min(filteredMembers.length, maxVisible)} members. Search
+          to narrow the list.
         </p>
       ) : null}
     </div>

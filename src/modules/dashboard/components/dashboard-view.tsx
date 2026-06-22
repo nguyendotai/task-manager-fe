@@ -14,7 +14,7 @@ import {
   SquareKanban,
   Star,
   TimerReset,
-  UserRound
+  UserRound,
 } from "lucide-react";
 import {
   Button,
@@ -23,13 +23,13 @@ import {
   ErrorState,
   PriorityBadge,
   Skeleton,
-  StatusBadge
+  StatusBadge,
 } from "@/components/ui";
 import { dashboardService } from "@/modules/dashboard/services/dashboard-service";
 import type {
   DashboardData,
   DashboardRelatedEntity,
-  DashboardTask
+  DashboardTask,
 } from "@/modules/dashboard/types";
 import type { TaskStatus } from "@/modules/tasks/types";
 
@@ -41,7 +41,7 @@ const statusRows: Array<{
   { status: "TODO", label: "To Do", color: "bg-gray-500" },
   { status: "IN_PROGRESS", label: "In Progress", color: "bg-blue-500" },
   { status: "REVIEW", label: "Review", color: "bg-amber-500" },
-  { status: "DONE", label: "Done", color: "bg-emerald-500" }
+  { status: "DONE", label: "Done", color: "bg-emerald-500" },
 ];
 
 export function DashboardView() {
@@ -59,7 +59,7 @@ export function DashboardView() {
       setError(
         requestError instanceof Error
           ? requestError.message
-          : "Unable to load dashboard."
+          : "Unable to load dashboard.",
       );
     } finally {
       setLoading(false);
@@ -78,50 +78,50 @@ export function DashboardView() {
         label: "Workspaces",
         value: summary?.workspaces ?? 0,
         detail: "Workspace bạn có quyền xem",
-        icon: BriefcaseBusiness
+        icon: BriefcaseBusiness,
       },
       {
         label: "Boards",
         value: summary?.boards ?? 0,
         detail: "Kanban board đang theo dõi",
-        icon: SquareKanban
+        icon: SquareKanban,
       },
       {
         label: "Tasks",
         value: summary?.tasks ?? 0,
         detail: `${summary?.completedTasks ?? 0} completed`,
-        icon: CheckCircle2
+        icon: CheckCircle2,
       },
       {
         label: "My Tasks",
         value: summary?.myTasks ?? 0,
         detail: "Task đang assign cho bạn",
-        icon: UserRound
+        icon: UserRound,
       },
       {
         label: "Marked",
         value: summary?.markedTasks ?? 0,
         detail: "Task bạn đã đánh dấu",
-        icon: Star
+        icon: Star,
       },
       {
         label: "Overdue",
         value: summary?.overdueTasks ?? 0,
         detail: "Quá hạn và chưa DONE",
-        icon: TimerReset
+        icon: TimerReset,
       },
       {
         label: "Completed",
         value: summary?.completedTasks ?? 0,
         detail: "Task status DONE",
-        icon: ListTodo
-      }
+        icon: ListTodo,
+      },
     ];
   }, [data]);
 
   const totalStatusTasks = statusRows.reduce(
     (total, row) => total + (data?.taskStatus[row.status] ?? 0),
-    0
+    0,
   );
 
   return (
@@ -129,7 +129,7 @@ export function DashboardView() {
       <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               <Gauge className="size-4" />
               Dashboard
             </p>
@@ -142,7 +142,11 @@ export function DashboardView() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Button variant="secondary" onClick={loadDashboard} disabled={loading}>
+            <Button
+              variant="secondary"
+              onClick={loadDashboard}
+              disabled={loading}
+            >
               <RefreshCw className="size-4" />
               Refresh
             </Button>
@@ -155,7 +159,7 @@ export function DashboardView() {
             </Link>
             <Link
               href="/workspaces"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl bg-red-600 px-4 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               <Plus className="size-5" />
               New Workspace
@@ -183,10 +187,10 @@ export function DashboardView() {
               return (
                 <Card key={metric.label} className="p-5">
                   <div className="flex items-center justify-between gap-4">
-                    <div className="grid size-11 place-items-center rounded-2xl bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
+                    <div className="grid size-11 place-items-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
                       <Icon className="size-5" />
                     </div>
-                    <span className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-bold text-red-700 ring-1 ring-red-100 dark:bg-red-950/30 dark:text-red-300 dark:ring-red-900/60">
+                    <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 ring-1 ring-blue-100 dark:bg-blue-950/30 dark:text-blue-300 dark:ring-blue-900/60">
                       Live
                     </span>
                   </div>
@@ -208,14 +212,14 @@ export function DashboardView() {
             <Card className="p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
                     Delivery
                   </p>
                   <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
                     Task status
                   </h2>
                 </div>
-                <span className="grid size-11 place-items-center rounded-2xl bg-red-600 text-white shadow-lg shadow-red-600/20 dark:bg-red-500">
+                <span className="grid size-11 place-items-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20 dark:bg-blue-500">
                   <SquareKanban className="size-5" />
                 </span>
               </div>
@@ -253,7 +257,7 @@ export function DashboardView() {
             <Card className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
                     Activity
                   </p>
                   <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
@@ -338,7 +342,9 @@ function RecentTaskItem({ task }: { task: DashboardTask }) {
         <span>{getEntityName(task.board, "Board")}</span>
       </div>
       <p className="mt-2 text-xs text-gray-400 dark:text-zinc-500">
-        {task.createdAt ? new Date(task.createdAt).toLocaleString() : "Recently"}
+        {task.createdAt
+          ? new Date(task.createdAt).toLocaleString()
+          : "Recently"}
       </p>
     </article>
   );
@@ -346,11 +352,11 @@ function RecentTaskItem({ task }: { task: DashboardTask }) {
 
 function getEntityName(
   entity: DashboardRelatedEntity | string | undefined,
-  fallback: string
+  fallback: string,
 ) {
   if (!entity) {
     return fallback;
   }
 
-  return typeof entity === "string" ? entity : entity.name ?? fallback;
+  return typeof entity === "string" ? entity : (entity.name ?? fallback);
 }
