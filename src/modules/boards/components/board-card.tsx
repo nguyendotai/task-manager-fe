@@ -55,10 +55,6 @@ export function BoardCard({
         </Link>
       </div>
 
-      <p className="mt-4 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-gray-500 dark:text-zinc-400">
-        Kanban board with To Do, In Progress, and Done columns.
-      </p>
-
       <div className="mt-5 grid grid-cols-2 gap-3 border-t border-gray-100 pt-4 dark:border-zinc-800">
         <span className="flex items-center gap-2 text-xs font-bold text-gray-500 dark:text-zinc-400">
           <Columns3 className="size-4 text-blue-600 dark:text-blue-500" />

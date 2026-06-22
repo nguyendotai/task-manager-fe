@@ -59,24 +59,6 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
 
         <SidebarNav onNavigate={onClose} />
-
-        <div className="mt-auto rounded-2xl border border-blue-100 bg-blue-50 p-4 dark:border-blue-900/60 dark:bg-blue-950/25">
-          <p className="text-sm font-bold text-blue-950 dark:text-blue-100">
-            Workspace flow
-          </p>
-          <p className="mt-1 text-xs leading-5 text-blue-800 dark:text-blue-200">
-            Projects, boards, tasks, and labels are managed inside each
-            workspace.
-          </p>
-          <Link
-            href="/workspaces"
-            onClick={onClose}
-            className="mt-3 inline-flex items-center gap-2 text-xs font-black text-blue-700 transition hover:text-blue-900 dark:text-blue-200 dark:hover:text-blue-100"
-          >
-            Open workspaces
-            <ArrowRight className="size-3.5" />
-          </Link>
-        </div>
       </aside>
     </>
   );

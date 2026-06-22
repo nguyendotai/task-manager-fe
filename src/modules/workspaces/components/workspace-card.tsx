@@ -60,18 +60,10 @@ export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
         </span>
       </div>
 
-      <p className="mt-5 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-gray-500 dark:text-zinc-400">
-        {workspace.description || "No description has been added yet."}
-      </p>
-
       <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-zinc-800">
         <span className="flex items-center gap-2 text-xs font-bold text-gray-500 dark:text-zinc-400">
           <UserRound className="size-4" />
           {getOwnerName(workspace.owner)}
-        </span>
-        <span className="flex items-center gap-2 rounded-full bg-gray-50 px-3 py-1.5 text-xs font-bold text-gray-600 dark:bg-zinc-950 dark:text-zinc-300">
-          <FolderKanban className="size-4 text-blue-600 dark:text-blue-500" />
-          Workspace
         </span>
       </div>
     </Link>

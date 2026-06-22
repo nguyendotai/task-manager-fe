@@ -20,14 +20,11 @@ export function WorkspacesView() {
   return (
     <div className="space-y-6">
       <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
+            <p className="text-xl font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
               Workspaces
             </p>
-            <h1 className="mt-2 text-3xl font-bold tracking-normal text-gray-950 dark:text-zinc-50">
-              Team workspaces
-            </h1>
           </div>
 
           <button

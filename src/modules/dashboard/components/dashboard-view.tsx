@@ -77,43 +77,36 @@ export function DashboardView() {
       {
         label: "Workspaces",
         value: summary?.workspaces ?? 0,
-        detail: "Workspace bạn có quyền xem",
         icon: BriefcaseBusiness,
       },
       {
         label: "Boards",
         value: summary?.boards ?? 0,
-        detail: "Kanban board đang theo dõi",
         icon: SquareKanban,
       },
       {
         label: "Tasks",
         value: summary?.tasks ?? 0,
-        detail: `${summary?.completedTasks ?? 0} completed`,
         icon: CheckCircle2,
       },
       {
         label: "My Tasks",
         value: summary?.myTasks ?? 0,
-        detail: "Task đang assign cho bạn",
         icon: UserRound,
       },
       {
         label: "Marked",
         value: summary?.markedTasks ?? 0,
-        detail: "Task bạn đã đánh dấu",
         icon: Star,
       },
       {
         label: "Overdue",
         value: summary?.overdueTasks ?? 0,
-        detail: "Quá hạn và chưa DONE",
         icon: TimerReset,
       },
       {
         label: "Completed",
         value: summary?.completedTasks ?? 0,
-        detail: "Task status DONE",
         icon: ListTodo,
       },
     ];
@@ -127,17 +120,11 @@ export function DashboardView() {
   return (
     <div className="space-y-6">
       <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+        <div className="flex gap-6 xl:flex-row xl:items-center xl:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
-              <Gauge className="size-4" />
+            <p className="inline-flex items-center gap-2 text-xl font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-500">
+              <Gauge className="size-6" />
               Dashboard
-            </p>
-            <h1 className="mt-3 text-3xl font-bold tracking-normal text-gray-950 dark:text-zinc-50 md:text-4xl">
-              Workspace delivery overview
-            </h1>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-500 dark:text-zinc-400">
-              Dữ liệu được lấy trực tiếp từ API dashboard của user hiện tại.
             </p>
           </div>
 
@@ -190,18 +177,12 @@ export function DashboardView() {
                     <div className="grid size-11 place-items-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
                       <Icon className="size-5" />
                     </div>
-                    <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 ring-1 ring-blue-100 dark:bg-blue-950/30 dark:text-blue-300 dark:ring-blue-900/60">
-                      Live
-                    </span>
                   </div>
                   <p className="mt-5 text-sm font-semibold text-gray-500 dark:text-zinc-400">
                     {metric.label}
                   </p>
                   <p className="mt-2 text-3xl font-bold text-gray-950 dark:text-zinc-50">
                     {metric.value}
-                  </p>
-                  <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400">
-                    {metric.detail}
                   </p>
                 </Card>
               );

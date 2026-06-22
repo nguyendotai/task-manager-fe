@@ -332,10 +332,6 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
             <h1 className="mt-4 text-3xl font-bold tracking-normal text-gray-950 dark:text-zinc-50 md:text-4xl">
               {selectedBoard.name}
             </h1>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-500 dark:text-zinc-400">
-              {selectedBoard.description ||
-                "Move work across columns and keep workspace delivery visible."}
-            </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <div className="flex -space-x-2">
