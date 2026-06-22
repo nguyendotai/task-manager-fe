@@ -1,0 +1,156 @@
+"use client";
+
+import { FormEvent, useEffect, useState } from "react";
+import { X } from "lucide-react";
+import { createWorkspace } from "@/modules/workspaces/store/workspace-slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+
+type CreateWorkspaceModalProps = {
+  open: boolean;
+  onClose: () => void;
+};
+
+type FormErrors = {
+  name?: string;
+  description?: string;
+};
+
+export function CreateWorkspaceModal({
+  open,
+  onClose
+}: CreateWorkspaceModalProps) {
+  const dispatch = useAppDispatch();
+  const creating = useAppSelector((state) => state.workspaces.creating);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  useEffect(() => {
+    if (!open) {
+      setName("");
+      setDescription("");
+      setErrors({});
+    }
+  }, [open]);
+
+  if (!open) {
+    return null;
+  }
+
+  function validate() {
+    const nextErrors: FormErrors = {};
+
+    if (name.trim().length < 2) {
+      nextErrors.name = "Workspace name must be at least 2 characters.";
+    }
+
+    if (description.trim().length > 240) {
+      nextErrors.description = "Description must be 240 characters or less.";
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!validate()) {
+      return;
+    }
+
+    const result = await dispatch(
+      createWorkspace({
+        name: name.trim(),
+        description: description.trim()
+      })
+    );
+
+    if (createWorkspace.fulfilled.match(result)) {
+      onClose();
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-[70] grid place-items-center bg-black/45 px-4 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-5 shadow-soft dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-red-600 dark:text-red-500">
+              New workspace
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
+              Create Workspace
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-zinc-400">
+              Add a team space for projects, boards, tasks, and comments.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Close modal"
+            onClick={onClose}
+            className="grid size-10 place-items-center rounded-2xl border border-gray-200 text-gray-500 transition hover:bg-gray-50 hover:text-gray-950 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
+
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <label className="block">
+            <span className="text-sm font-bold text-gray-700 dark:text-zinc-200">
+              Name
+            </span>
+            <input
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              className="mt-2 h-12 w-full rounded-2xl border border-gray-200 bg-white px-4 text-sm text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              placeholder="Product Team"
+            />
+            {errors.name ? (
+              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+                {errors.name}
+              </span>
+            ) : null}
+          </label>
+
+          <label className="block">
+            <span className="text-sm font-bold text-gray-700 dark:text-zinc-200">
+              Description
+            </span>
+            <textarea
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              rows={4}
+              className="mt-2 w-full resize-none rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm leading-6 text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-red-600 focus:ring-4 focus:ring-red-600/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-red-500 dark:focus:ring-red-500/10"
+              placeholder="What does this workspace manage?"
+            />
+            {errors.description ? (
+              <span className="mt-1 block text-xs font-semibold text-red-600 dark:text-red-400">
+                {errors.description}
+              </span>
+            ) : null}
+          </label>
+
+          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              onClick={onClose}
+              className="h-11 rounded-2xl border border-gray-200 bg-white px-5 text-sm font-bold text-gray-700 transition hover:bg-gray-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={creating}
+              className="h-11 rounded-2xl bg-red-600 px-5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-red-500 dark:hover:bg-red-600"
+            >
+              {creating ? "Creating..." : "Create Workspace"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

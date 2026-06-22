@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: #f8fafc;
+  color: #111827;
+}
+
+.dark body {
+  background: #050505;
+  color: #f9fafb;
+}
+
+@layer base {
+  ::selection {
+    @apply bg-brand-600 text-white;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply border border-slate-200 bg-white shadow-soft dark:border-zinc-800 dark:bg-zinc-950;
+  }
+
+  .muted-label {
+    @apply text-sm font-medium text-slate-500 dark:text-zinc-400;
+  }
+}
