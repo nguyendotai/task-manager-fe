@@ -68,7 +68,7 @@ export function DeleteTaskConfirm({
             type="button"
             disabled={loading}
             onClick={onConfirm}
-            className="h-11 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:hover:bg-blue-600"
+            className="h-11 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg -600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
             {loading ? "Deleting..." : "Delete Task"}
           </button>

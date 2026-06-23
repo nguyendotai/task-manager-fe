@@ -33,6 +33,14 @@ export type UpdateWorkspaceRequest = Partial<CreateWorkspaceRequest> & {
   isDeleted?: boolean;
 };
 
+export type WorkspaceMember = {
+  id: string;
+  _id?: string;
+  role: "WORKSPACE_OWNER" | "WORKSPACE_ADMIN" | "MEMBER" | "GUEST";
+  joinedAt?: string;
+  user: User;
+};
+
 export type ApiResponse<T> = {
   success: boolean;
   message: string;

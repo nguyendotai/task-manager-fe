@@ -134,7 +134,7 @@ export function TaskFilters({
                   className={cn(
                     "flex w-full items-center justify-between gap-3 rounded-2xl px-3 py-3 text-left transition",
                     activeFilter === item.key
-                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20 dark:bg-blue-500"
+                      ? "bg-blue-600 text-white shadow-lg -600/20 dark:bg-blue-500"
                       : "text-gray-600 hover:bg-white hover:text-gray-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50",
                   )}
                 >

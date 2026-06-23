@@ -148,7 +148,7 @@ export function TaskFormModal({
       return;
     }
 
-    onSubmit({
+    const payload = {
       title: title.trim(),
       description: description.trim(),
       columnId,
@@ -158,10 +158,15 @@ export function TaskFormModal({
       priority,
       status,
       visibility,
-      dueDate: dueDate || undefined,
+      dueDate: dueDate ? new Date(dueDate).toISOString() : undefined,
+    };
+    console.log({
+      dueDate,
     });
-  }
+    console.log("payload:", payload);
 
+    onSubmit(payload);
+  }
   return (
     <Modal open={open} title={titleText} eyebrow="Task" onClose={onClose}>
       {error ? (

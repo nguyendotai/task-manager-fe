@@ -4,7 +4,8 @@ import type {
   CreateWorkspaceRequest,
   UpdateWorkspaceRequest,
   Workspace,
-  WorkspaceListData
+  WorkspaceListData,
+  WorkspaceMember,
 } from "@/modules/workspaces/types";
 
 type WorkspaceListItem =
@@ -37,7 +38,7 @@ function normalizeWorkspace(item: WorkspaceListItem): Workspace | null {
   return {
     ...workspace,
     id: workspace.id ?? workspace._id ?? workspace.slug,
-    isDeleted: workspace.isDeleted ?? false
+    isDeleted: workspace.isDeleted ?? false,
   };
 }
 
@@ -50,12 +51,16 @@ function normalizeWorkspaceList(data: WorkspaceListData): Workspace[] {
 
 export const workspaceService = {
   async getWorkspaces() {
-    const response = await api.get<ApiResponse<WorkspaceListData>>("/workspaces");
+    const response =
+      await api.get<ApiResponse<WorkspaceListData>>("/workspaces");
     return normalizeWorkspaceList(response.data.data);
   },
 
   async createWorkspace(payload: CreateWorkspaceRequest) {
-    const response = await api.post<ApiResponse<Workspace>>("/workspaces", payload);
+    const response = await api.post<ApiResponse<Workspace>>(
+      "/workspaces",
+      payload,
+    );
     const workspace = normalizeWorkspace(response.data.data);
 
     if (!workspace) {
@@ -67,7 +72,7 @@ export const workspaceService = {
 
   async getWorkspaceById(workspaceId: string) {
     const response = await api.get<ApiResponse<Workspace>>(
-      `/workspaces/${workspaceId}`
+      `/workspaces/${workspaceId}`,
     );
     const workspace = normalizeWorkspace(response.data.data);
 
@@ -81,7 +86,7 @@ export const workspaceService = {
   async updateWorkspace(workspaceId: string, payload: UpdateWorkspaceRequest) {
     const response = await api.patch<ApiResponse<Workspace>>(
       `/workspaces/${workspaceId}`,
-      payload
+      payload,
     );
     const workspace = normalizeWorkspace(response.data.data);
 
@@ -94,8 +99,21 @@ export const workspaceService = {
 
   async deleteWorkspace(workspaceId: string) {
     await api.delete<ApiResponse<Record<string, never>>>(
-      `/workspaces/${workspaceId}`
+      `/workspaces/${workspaceId}`,
     );
     return workspaceId;
-  }
+  },
+
+  async getWorkspaceMembers(workspaceId: string): Promise<WorkspaceMember[]> {
+    const response = await api.get<ApiResponse<any[]>>(
+      `/workspaces/${workspaceId}/members`,
+    );
+
+    return response.data.data.map((member) => ({
+      id: member._id,
+      role: member.role,
+      joinedAt: member.joinedAt,
+      user: member.user,
+    }));
+  },
 };

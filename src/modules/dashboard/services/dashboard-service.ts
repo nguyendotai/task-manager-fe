@@ -54,25 +54,39 @@ function normalizeTask(task: DashboardTask): DashboardTask {
 }
 
 function normalizeDashboard(data: DashboardData): DashboardData {
+  const taskStatus = {
+    TODO: 0,
+    IN_PROGRESS: 0,
+    REVIEW: 0,
+    DONE: 0,
+  };
+
+  const taskPriority = {
+    LOW: 0,
+    MEDIUM: 0,
+    HIGH: 0,
+    URGENT: 0,
+  };
+
+  data.recentTasks?.forEach((task) => {
+    taskStatus[task.status]++;
+    taskPriority[task.priority]++;
+  });
+
   return {
     counts: {
       ...defaultSummary,
-      ...(data.counts ?? {}), 
+      ...(data.counts ?? {})
     },
-    taskStatus: {
-      ...defaultTaskStatus,
-      ...(data.taskStatus ?? {}),
-    },
-    taskPriority: {
-      ...defaultTaskPriority,
-      ...(data.taskPriority ?? {}),
-    },
+
+    taskStatus,
+    taskPriority,
+
     recentTasks: Array.isArray(data.recentTasks)
       ? data.recentTasks.map(normalizeTask)
-      : [],
+      : []
   };
 }
-
 export const dashboardService = {
   async getDashboard() {
     const response = await api.get<ApiResponse<DashboardData>>("/dashboard");

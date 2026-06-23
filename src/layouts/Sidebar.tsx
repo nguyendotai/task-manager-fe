@@ -35,7 +35,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
             onClick={onClose}
             className="flex items-center gap-3 px-1"
           >
-            <span className="grid size-11 place-items-center rounded-2xl bg-blue-600 text-lg font-black text-white shadow-lg shadow-blue-600/25 dark:bg-blue-500">
+            <span className="grid size-11 place-items-center rounded-2xl bg-blue-600 text-lg font-black text-white shadow-lg -600/25 dark:bg-blue-500">
               A
             </span>
             <span>

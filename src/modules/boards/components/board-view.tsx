@@ -128,6 +128,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
   const { items: workspaceLabels } = useAppSelector((state) => state.labels);
   const { data: workspaceMembers = [], isLoading: membersLoading } =
     useGetWorkspaceMembersQuery(workspaceId);
+  console.log("workspaceMembers", workspaceMembers);
   const permissions = useWorkspaceMemberPermissions(workspaceMembers);
   const canManageBoard = canManageBoards(permissions.role);
   const canUpdateTask = canUpdateTasks(permissions.role);
@@ -454,7 +455,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
                 className={cn(
                   "inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-2xl px-4 text-sm font-bold transition",
                   tab.active
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20 dark:bg-blue-500"
+                    ? "bg-blue-600 text-white shadow-lg -600/20 dark:bg-blue-500"
                     : "text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 dark:text-zinc-400 dark:hover:bg-zinc-800",
                 )}
               >

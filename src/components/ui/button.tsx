@@ -11,7 +11,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variantClassName: Record<ButtonVariant, string> = {
   primary:
-    "bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600",
+    "bg-blue-600 text-white shadow-lg -600/20 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600",
   secondary:
     "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800",
   ghost:
