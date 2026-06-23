@@ -675,7 +675,6 @@ function KanbanColumn({
           <EmptyState
             icon={<List className="size-7" />}
             title="No tasks"
-            description="Add a task or adjust filters to show more work."
             className="min-h-40 bg-white/70 p-5 dark:bg-zinc-900/70"
           />
         ) : null}

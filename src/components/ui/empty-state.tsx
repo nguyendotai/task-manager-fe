@@ -24,7 +24,7 @@ export function EmptyState({
         <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
           {icon}
         </div>
-        <h2 className="mt-5 text-xl font-bold text-gray-950 dark:text-zinc-50">
+        <h2 className="mt-5 font-bold text-gray-950 dark:text-zinc-50">
           {title}
         </h2>
         {description ? (

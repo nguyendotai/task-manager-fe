@@ -40,7 +40,7 @@ export type DashboardTask = {
 };
 
 export type DashboardData = {
-  summary: DashboardSummary;
+  counts: DashboardSummary;
   taskStatus: Record<TaskStatus, number>;
   taskPriority?: Record<TaskPriority, number>;
   recentTasks: DashboardTask[];

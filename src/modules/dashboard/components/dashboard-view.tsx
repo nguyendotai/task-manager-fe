@@ -71,7 +71,7 @@ export function DashboardView() {
   }, []);
 
   const metrics = useMemo(() => {
-    const summary = data?.summary;
+    const summary = data?.counts;
 
     return [
       {
@@ -197,7 +197,7 @@ export function DashboardView() {
                     Delivery
                   </p>
                   <h2 className="mt-2 text-2xl font-bold text-gray-950 dark:text-zinc-50">
-                    Task status
+                    Task statusd
                   </h2>
                 </div>
                 <span className="grid size-11 place-items-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20 dark:bg-blue-500">

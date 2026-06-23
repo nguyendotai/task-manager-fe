@@ -26,7 +26,6 @@ type TaskCardProps = {
 
 export function TaskCard({
   task,
-  labelsById = {},
   members = [],
   onEdit,
   onDelete,
@@ -117,9 +116,6 @@ export function TaskCard({
       <h3 className="mt-3 text-base font-bold leading-6 text-gray-950 dark:text-zinc-50">
         {task.title}
       </h3>
-      <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500 dark:text-zinc-400">
-        {task.description || "No description has been added."}
-      </p>
 
       {task.labels.length > 0 ? (
         <div className="mt-4 flex flex-wrap gap-2">
