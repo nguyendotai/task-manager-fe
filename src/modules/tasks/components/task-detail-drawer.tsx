@@ -235,19 +235,15 @@ export function TaskDetailDrawer({
                     No labels
                   </span>
                 ) : null}
-                {task.labels.map((label) => {
-                  const labelMeta = labelsById[label];
-
-                  return (
-                    <span
-                      key={label}
-                      className="rounded-full px-3 py-1 text-xs font-bold text-white"
-                      style={{ backgroundColor: labelMeta?.color ?? "#dc2626" }}
-                    >
-                      {labelMeta?.name ?? label}
-                    </span>
-                  );
-                })}
+                {task.labels.map((label) => (
+                  <span
+                    key={label.id}
+                    className="rounded-full px-3 py-1 text-xs font-bold text-white"
+                    style={{ backgroundColor: label.color }}
+                  >
+                    {label.name}
+                  </span>
+                ))}
               </div>
             </div>
           </section>

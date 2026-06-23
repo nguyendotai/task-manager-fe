@@ -123,19 +123,16 @@ export function TaskCard({
 
       {task.labels.length > 0 ? (
         <div className="mt-4 flex flex-wrap gap-2">
-          {task.labels.map((label) => {
-            const labelMeta = labelsById[label];
+          {task.labels.map((label) => (
 
-            return (
               <span
-                key={label}
+                key={label._id}
                 className="rounded-full px-2.5 py-1 text-xs font-bold text-white"
-                style={{ backgroundColor: labelMeta?.color ?? "#dc2626" }}
+                style={{ backgroundColor: label.color ?? "#dc2626" }}
               >
-                {labelMeta?.name ?? label}
+                {label.name ?? label}
               </span>
-            );
-          })}
+          ))}
         </div>
       ) : null}
 

@@ -1,4 +1,5 @@
 import type { User } from "@/types";
+import { Label } from "../labels/types";
 
 export type TaskPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 export type TaskStatus = "TODO" | "IN_PROGRESS" | "REVIEW" | "DONE";
@@ -10,24 +11,32 @@ export type Task = {
   _id?: string;
   title: string;
   description?: string;
+
   board: string;
   boardId?: string;
+
   column: string;
   columnId?: string;
+
   workspace: string;
   workspaceId?: string;
+
   assignees: TaskAssignee[];
   allowedMembers?: string[];
-  labels: string[];
+
+  labels: Label[];
+
   markedBy?: string[];
   priority: TaskPriority;
   status: TaskStatus;
   visibility?: TaskVisibility;
   dueDate?: string;
   order?: number;
+
   createdBy?: TaskAssignee;
   isMarked?: boolean;
   marked?: boolean;
+
   createdAt?: string;
   updatedAt?: string;
 };
@@ -38,7 +47,9 @@ export type TaskFormValues = {
   columnId: string;
   assignees: string[];
   allowedMembers?: string[];
+
   labels: string[];
+
   priority: TaskPriority;
   status: TaskStatus;
   visibility: TaskVisibility;
@@ -52,9 +63,12 @@ export type CreateTaskRequest = {
   boardId: string;
   columnId: string;
   workspaceId: string;
+
   assignees?: string[];
   allowedMembers?: string[];
+
   labels?: string[];
+
   priority: TaskPriority;
   status: TaskStatus;
   visibility?: TaskVisibility;

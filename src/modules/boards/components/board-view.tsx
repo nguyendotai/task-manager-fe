@@ -182,7 +182,7 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
   const labelOptions = useMemo(() => {
     const taskLabelNames = allTasks
       .flatMap((task) => task.labels)
-      .map((label) => labelsById[label]?.name ?? label);
+      .map((label) => label.name);
 
     return Array.from(
       new Set([
@@ -235,7 +235,9 @@ export function BoardView({ workspaceId, boardId }: BoardViewProps) {
           priority: values.priority,
           status: values.status,
           visibility: values.visibility,
-          dueDate: values.dueDate,
+          dueDate: values.dueDate
+            ? new Date(values.dueDate).toISOString()
+            : undefined,
           order: values.order,
         }),
       );
@@ -737,9 +739,7 @@ function filterTasks(
   labelsById: Record<string, Label>,
 ) {
   return tasks.filter((task) => {
-    const taskLabelNames = task.labels.map(
-      (label) => labelsById[label]?.name ?? label,
-    );
+    const taskLabelNames = task.labels.map((label) => label.name);
     const assigneeIds = getTaskAssigneeIds(task);
     const matchesPriority =
       filters.priorities.length === 0 ||

@@ -76,7 +76,7 @@ export function TaskFormModal({
   const [status, setStatus] = useState<TaskStatus>("TODO");
   const [visibility, setVisibility] = useState<TaskVisibility>("PUBLIC");
   const [dueDate, setDueDate] = useState("");
-  const [labels, setLabels] = useState("");
+  const [labels, setLabels] = useState<string[]>([]);
   const [assignees, setAssignees] = useState<string[]>([]);
   const [allowedMembers, setAllowedMembers] = useState<string[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -102,7 +102,7 @@ export function TaskFormModal({
     setStatus(task?.status ?? "TODO");
     setVisibility(task?.visibility ?? "PUBLIC");
     setDueDate(task?.dueDate ? task.dueDate.slice(0, 10) : "");
-    setLabels(task?.labels.join(", ") ?? "");
+    setLabels(task?.labels?.map((label) => label.id) ?? []);
     setAssignees(task ? getTaskAssigneeIds(task) : []);
     setAllowedMembers(task ? getTaskAllowedMemberIds(task) : []);
     setErrors({});
@@ -154,7 +154,7 @@ export function TaskFormModal({
       columnId,
       assignees,
       allowedMembers: visibility === "PRIVATE" ? allowedMembers : [],
-      labels: splitList(labels),
+      labels,
       priority,
       status,
       visibility,
@@ -310,10 +310,7 @@ export function TaskFormModal({
           {labelOptions.length > 0 ? (
             <div className="mt-2 flex flex-wrap gap-2 rounded-2xl border border-gray-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-950">
               {labelOptions.map((label) => {
-                const selectedLabels = splitList(labels);
-                const checked =
-                  selectedLabels.includes(label.id) ||
-                  selectedLabels.includes(label.name);
+                const checked = labels.includes(label.id);
 
                 return (
                   <label
@@ -326,12 +323,10 @@ export function TaskFormModal({
                       checked={checked}
                       onChange={() => {
                         const nextLabels = checked
-                          ? selectedLabels.filter(
-                              (item) =>
-                                item !== label.id && item !== label.name,
-                            )
-                          : [...selectedLabels, label.id];
-                        setLabels(nextLabels.join(", "));
+                          ? labels.filter((id) => id !== label.id)
+                          : [...labels, label.id];
+
+                        setLabels(nextLabels);
                       }}
                       className="size-3 rounded border-white/60 bg-white/20 text-blue-600"
                     />
@@ -341,12 +336,7 @@ export function TaskFormModal({
               })}
             </div>
           ) : (
-            <Input
-              value={labels}
-              onChange={(event) => setLabels(event.target.value)}
-              className="mt-2"
-              placeholder="frontend, urgent, api"
-            />
+            <p className="mt-2 text-sm text-gray-500">No labels available.</p>
           )}
         </div>
 
@@ -412,11 +402,4 @@ export function TaskFormModal({
       </form>
     </Modal>
   );
-}
-
-function splitList(value: string) {
-  return value
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
 }

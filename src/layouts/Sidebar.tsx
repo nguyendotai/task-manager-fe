@@ -42,9 +42,6 @@ export function Sidebar({ open, onClose }: SidebarProps) {
               <span className="block text-base font-black tracking-normal text-gray-950 dark:text-zinc-50">
                 NDT-Task
               </span>
-              <span className="block text-xs font-medium text-gray-500 dark:text-zinc-400">
-                SaaS workspace
-              </span>
             </span>
           </Link>
 
